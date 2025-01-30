@@ -16,6 +16,9 @@ const signupForm = document.getElementById('signup-form');
 const loginForm = document.getElementById('login-form');
 const logoutButton = document.getElementById('logout-button');
 const usernameDisplay = document.getElementById('username');
+const profileUsername = document.getElementById('profile-username');
+const profileEmail = document.getElementById('profile-email');
+const updateProfileForm = document.getElementById('update-profile-form');
 
 // Signup Functionality
 if (signupForm) {
@@ -95,23 +98,73 @@ if (logoutButton) {
   });
 }
 
-// Check Auth State
+// Profile Functionality
+if (profileUsername && profileEmail) {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      // Fetch user data from Firestore
+      db.collection('users').doc(user.uid).get()
+        .then((doc) => {
+          if (doc.exists) {
+            const userData = doc.data();
+            profileUsername.textContent = userData.username;
+            profileEmail.textContent = userData.email;
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching user data:', error);
+        });
+    } else {
+      // User is signed out
+      window.location.href = 'login.html';
+    }
+  });
+}
+
+// Update Profile Functionality
+if (updateProfileForm) {
+  updateProfileForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const newUsername = document.getElementById('new-username').value;
+
+    const user = auth.currentUser;
+    if (user) {
+      // Update username in Firestore
+      db.collection('users').doc(user.uid).update({
+        username: newUsername
+      })
+      .then(() => {
+        alert('Username updated successfully!');
+        profileUsername.textContent = newUsername;
+      })
+      .catch((error) => {
+        alert('Error updating username: ' + error.message);
+      });
+    } else {
+      alert('User not logged in.');
+    }
+  });
+}
+
+// Check Auth State for All Pages
 auth.onAuthStateChanged((user) => {
   if (user) {
     // User is signed in
-    db.collection('users').doc(user.uid).get()
-      .then((doc) => {
-        if (doc.exists && usernameDisplay) {
-          const userData = doc.data();
-          usernameDisplay.textContent = userData.username;
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching user data:', error);
-      });
+    if (usernameDisplay) {
+      db.collection('users').doc(user.uid).get()
+        .then((doc) => {
+          if (doc.exists) {
+            const userData = doc.data();
+            usernameDisplay.textContent = userData.username;
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching user data:', error);
+        });
+    }
   } else {
     // User is signed out
-    if (window.location.pathname !== '/login.html') {
+    if (window.location.pathname !== '/login.html' && window.location.pathname !== '/signup.html') {
       window.location.href = 'login.html';
     }
   }
