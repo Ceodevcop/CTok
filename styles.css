@@ -1,28 +1,105 @@
-/* General Form Styling */
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Navigation Bar */
+nav {
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav ul li {
+  margin: 0 10px;
+}
+
+nav ul li a {
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+  background-color: #555;
+}
+
+/* Hero Section */
+#hero {
+  background: url('hero-bg.jpg') no-repeat center center/cover;
+  color: white;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+#hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+#hero p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Countdown Timer */
+#countdown {
+  font-size: 2rem;
+  margin: 20px 0;
+}
+
+#countdown span {
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  margin: 0 5px;
+}
+
+/* Forms */
 form {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #fff;
+  background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Form Group (for labels and inputs) */
 .form-group {
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
 }
 
-/* Label Styling */
 form label {
   font-weight: bold;
   margin-bottom: 5px;
   color: #333;
 }
 
-/* Input Field Styling */
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],
@@ -36,7 +113,6 @@ form select {
   box-sizing: border-box;
 }
 
-/* Input Field Focus */
 form input:focus,
 form textarea:focus,
 form select:focus {
@@ -45,7 +121,6 @@ form select:focus {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Button Styling */
 form button {
   padding: 10px 20px;
   background-color: #007bff;
@@ -61,21 +136,64 @@ form button:hover {
   background-color: #0056b3;
 }
 
-/* Radio and Checkbox Styling */
-form input[type="radio"],
-form input[type="checkbox"] {
-  margin-right: 10px;
+/* Video Gallery */
+#videoList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
-/* Error Message Styling */
-.error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 5px;
+#videoList video {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive Layout */
-@media (max-width: 600px) {
+.video-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.video-stats span {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  #hero h1 {
+    font-size: 2rem;
+  }
+
+  #hero p {
+    font-size: 1rem;
+  }
+
+  #countdown {
+    font-size: 1.5rem;
+  }
+
   form {
     padding: 15px;
   }
