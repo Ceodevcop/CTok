@@ -1,136 +1,82 @@
-/* Profile Page Styles */
-#profile-info {
+/* General Form Styling */
+form {
   max-width: 400px;
-  margin: 20px auto;
+  margin: 0 auto;
   padding: 20px;
-  background: white;
+  background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#profile-info p {
-  font-size: 18px;
-  margin: 10px 0;
+/* Form Group (for labels and inputs) */
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
-#update-profile-form {
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#update-profile-form input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-#update-profile-form button {
-  width: 100%;
-  padding: 10px;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-#update-profile-form button:hover {
-  background-color: #555;
-}
-/* Global Styles */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
+/* Label Styling */
+form label {
+  font-weight: bold;
+  margin-bottom: 5px;
   color: #333;
 }
 
-/* Navigation Bar */
-nav {
-  background-color: #0056b3;
-  padding: 10px 0;
-  text-align: center;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-nav ul li {
-  display: inline;
-  margin: 0 15px;
-}
-
-nav ul li a {
-  color: white;
-  text-decoration: none;
+/* Input Field Styling */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea,
+form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   font-size: 16px;
-  font-weight: bold;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background 0.3s ease-in-out;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-nav ul li a:hover {
-  background: rgba(255, 255, 255, 0.2);
+/* Input Field Focus */
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Main Content */
-main {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  text-align: center;
-}
-
-h1 {
-  color: #0056b3;
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-#profileInfo p {
-  font-size: 18px;
-  margin: 10px 0;
-  color: #444;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 15px;
-  background: #0056b3;
+/* Button Styling */
+form button {
+  padding: 10px 20px;
+  background-color: #007bff;
   color: white;
-  margin-top: 50px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
 }
 
-footer p {
-  margin: 0;
+form button:hover {
+  background-color: #0056b3;
+}
+
+/* Radio and Checkbox Styling */
+form input[type="radio"],
+form input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Error Message Styling */
+.error-message {
+  color: red;
   font-size: 14px;
+  margin-top: 5px;
 }
 
-/* Responsive Design */
+/* Responsive Layout */
 @media (max-width: 600px) {
-  nav ul li {
-    display: block;
-    margin: 10px 0;
-  }
-
-  main {
-    width: 90%;
+  form {
     padding: 15px;
   }
 }
-
