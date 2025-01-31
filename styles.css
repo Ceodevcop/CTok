@@ -12,13 +12,13 @@ h1 {
   margin-top: 20px;
 }
 
-nav {
+ul {
   background-color: #333;
   padding: 10px;
   text-align: center;
 }
 
-nav a {
+ul a {
   color: white;
   text-decoration: none;
   margin: 0 15px;
