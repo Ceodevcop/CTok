@@ -25,7 +25,7 @@ ul a {
   font-size: 18px;
 }
 
-nav a:hover {
+ul a:hover {
   text-decoration: underline;
 }
 
