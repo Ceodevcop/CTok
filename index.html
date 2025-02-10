@@ -1,46 +1,57 @@
 <!DOCTYPE html>
-<nav>
-        
-            <button ><a href="index.html">Home</a></button>
-            <button ><a href="about.html">About</a></button >
-            <button ><a href="speakers.html">Speakers</a></button >
-            <button ><a href="schedule.html">Schedule</a></button >
-            <button ><a href="blog.html">Blog</a></button >
-            <button ><a href="contact.html">Contact</a></button >
-            <button ><a href="profile.html" id="profileLink">Profile</a></button >
-          <button > <a href="login.html" id="loginLink">Login</a></button >
-           <button ><a href="signup.html" id="signupLink">Sign Up</a></button >
-    </nav>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Plataforma Conference</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - My Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
-    <main>
-        <section id="hero">
-            <h1>CONFERENCE 2025</h1>
-            <p>20-23 march  2025 - Bauchi, BA</p>
-            <div id="countdown">
-                <span id="days">00</span> Days
-                <span id="hours">00</span>:
-                <span id="minutes">00</span>:
-                <span id="seconds">00</span>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 Devcxxp CTok. All rights reserved.</p>
-    </footer>
-    <script src="firebase.js"></script>
-    <script src="scripts.js"></script>
+  <!-- Home Section -->
+  <section class="section">
+    <h1>Welcome to My Portfolio</h1>
+    <p>Explore my projects and skills.</p>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section class="portfolio-container">
+    <div class="portfolio-item">
+      <div class="card">
+        <div class="card-front">
+          <h2>Project 1</h2>
+          <p>Click to see details</p>
+        </div>
+        <div class="card-back">
+          <h2>Project 1 Details</h2>
+          <p>This is a description of Project 1.</p>
+          <a href="#">View Project</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-item">
+      <div class="card">
+        <div class="card-front">
+          <h2>Project 2</h2>
+          <p>Click to see details</p>
+        </div>
+        <div class="card-back">
+          <h2>Project 2 Details</h2>
+          <p>This is a description of Project 2.</p>
+          <a href="#">View Project</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom Navigation Buttons -->
+  <footer class="bottom-nav">
+    <a href="index.html" class="nav-button">Home</a>
+    <a href="dashboard.html" class="nav-button">Dashboard</a>
+    <a href="shop.html" class="nav-button">Shop</a>
+    <a href="contact.html" class="nav-button">Contact</a>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
-    <button ><a ref="#" id="logoutLink" style="display:none;">Logout</a></button >
 </html>
