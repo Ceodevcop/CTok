@@ -22,10 +22,10 @@ async function generateUID(country) {
     return `iDEV${countryAbbr}${String(nextNumber).padStart(6, "0")}`;
 }
 
-// Handle Profile Submission
 document.getElementById("profileForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
+    // Get Form Data
     const name = document.getElementById("name").value;
     const age = document.getElementById("age").value;
     const location = document.getElementById("location").value;
@@ -33,13 +33,21 @@ document.getElementById("profileForm").addEventListener("submit", async function
     const hobbies = document.getElementById("hobbies").value.split(",").map(h => h.trim());
     const interests = document.getElementById("interests").value.split(",").map(i => i.trim());
 
+    // Generate Unique UID
     const uid = await generateUID(country);
     if (!uid) return;
 
-    const profileData = { uid, name, age, location, country, hobbies, interests, approved: false };
+    // Save Profile to Firestore
+    try {
+        await db.collection("profiles").doc(uid).set({
+            uid, name, age, location, country, hobbies, interests, approved: false
+        });
 
-    await db.collection("profiles").doc(uid).set(profileData);
-    alert(`Profile Submitted! Your UID: ${uid}`);
+        alert(`Profile Submitted! Your UID: ${uid}`);
+    } catch (error) {
+        console.error("Error saving profile:", error);
+        alert("Failed to save profile. Check console for errors.");
+    }
 });
 
 // Upload Images (Max 4, 1MB Each)
