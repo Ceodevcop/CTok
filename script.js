@@ -1,5 +1,5 @@
 const GITHUB_REPO = "username/matchmaking-site";  
-const GITHUB_TOKEN = "ghp_your_personal_token";  
+const GITHUB_TOKEN = "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";  
 
 document.getElementById("profileForm").addEventListener("submit", async function (event) {
     event.preventDefault();
