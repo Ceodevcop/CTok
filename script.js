@@ -1,6 +1,21 @@
+// 🔥 Firebase Configuration
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const storage = firebase.storage();
+
 const GITHUB_REPO = "Ceodevcop/CTok";
 
-// Generate Unique UID
+// Generate Unique UID (iDEV<CountryAbbr>000001)
 async function generateUID(country) {
     const countryAbbr = getCountryAbbreviation(country);
     if (!countryAbbr) {
@@ -8,12 +23,15 @@ async function generateUID(country) {
         return null;
     }
 
+    // Fetch existing profiles from GitHub
     const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/profiles.json`);
     const profiles = response.ok ? await response.json() : [];
 
+    // Find the last UID used for this country
     const filteredProfiles = profiles.filter(p => p.uid.startsWith(`iDEV${countryAbbr}`));
     const lastUID = filteredProfiles.length > 0 ? filteredProfiles[filteredProfiles.length - 1].uid : `iDEV${countryAbbr}000000`;
 
+    // Generate next UID
     const nextNumber = parseInt(lastUID.slice(-6)) + 1;
     if (nextNumber > 999999) {
         alert("UID limit reached for this country!");
@@ -48,19 +66,24 @@ document.getElementById("profileForm").addEventListener("submit", async function
 
     const profileData = { uid, name, age, location, country, hobbies, interests, approved: false };
 
+    // Save to Firebase Firestore
+    await db.collection("profiles").doc(uid).set(profileData);
+    
+    // Update GitHub (Placeholder)
     await saveProfileToGitHub(profileData);
+
     alert(`Profile submitted! Your UID is: ${uid}`);
 });
 
-// Save Profile to GitHub
+// Save Profile to GitHub (GitHub API Authentication Required)
 async function saveProfileToGitHub(profileData) {
-    // This function requires GitHub authentication (to be implemented)
-    console.log("Saving profile:", profileData);
+    console.log("Saving profile to GitHub (placeholder function):", profileData);
 }
 
 // Handle Admin Approval
-function approveProfile(uid) {
-    console.log(`Admin approved: ${uid}`);
+async function approveProfile(uid) {
+    await db.collection("profiles").doc(uid).update({ approved: true });
+    alert(`Profile ${uid} Approved!`);
 }
 
 // Chat System
@@ -76,8 +99,8 @@ function viewAllChats() {
     console.log("Admin viewing all chats...");
 }
 
-// Handle Image Upload (4 images max, 1MB each)
-document.getElementById("imageUpload").addEventListener("change", function (event) {
+// Handle Image Upload (Max 4 images, 1MB each)
+document.getElementById("imageUpload").addEventListener("change", async function (event) {
     const files = event.target.files;
     if (files.length > 4) {
         alert("You can upload a maximum of 4 images.");
@@ -89,6 +112,9 @@ document.getElementById("imageUpload").addEventListener("change", function (even
             alert("Each file must be 1MB or smaller.");
             return;
         }
-        console.log("Uploading image:", file.name);
+
+        const storageRef = storage.ref(`profile_pictures/${file.name}`);
+        await storageRef.put(file);
+        console.log("Image uploaded:", file.name);
     }
 });
