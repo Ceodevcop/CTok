@@ -1,39 +1,33 @@
-// Sign Up
-document.getElementById('signupForm')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const role = document.querySelector('input[name="role"]:checked').value;
+const GITHUB_REPO = "username/matchmaking-site";  
+const GITHUB_TOKEN = "ghp_your_personal_token";  
 
-    auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
-        const user = userCredential.user;
-        db.collection('users').doc(user.uid).set({
-            name: name,
-            email: email,
-            role: role,
-            points: 0
-        }).then(() => {
-            alert('Sign up successful!');
-            window.location.href = 'profile.html';
-        }).catch((error) => {
-            console.error('Error adding document: ', error);
-        });
-    }).catch((error) => {
-        console.error('Error creating user: ', error);
-    });
-});
+document.getElementById("profileForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-// Login
-document.getElementById('loginForm')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
+    const name = document.getElementById("name").value;
+    const age = document.getElementById("age").value;
+    const location = document.getElementById("location").value;
+    const hobbies = document.getElementById("hobbies").value.split(",").map(h => h.trim());
+    const interests = document.getElementById("interests").value.split(",").map(i => i.trim());
+    const files = document.getElementById("imageUpload").files;
 
-    auth.signInWithEmailAndPassword(email, password).then(() => {
-        alert('Login successful!');
-        window.location.href = 'profile.html';
-    }).catch((error) => {
-        console.error('Error logging in: ', error);
-    });
+    if (!name || !age || !location || files.length === 0) {
+        alert("All fields and at least one image are required!");
+        return;
+    }
+
+    let uploadedImageUrls = [];
+    for (let i = 0; i < files.length; i++) {
+        try {
+            const url = await uploadImageToGitHub(files[i], i);
+            uploadedImageUrls.push(url);
+        } catch (error) {
+            alert("Error uploading image " + (i + 1));
+            return;
+        }
+    }
+
+    const profileData = { name, age, location, hobbies, interests, images: uploadedImageUrls, approved: false };
+    await saveProfileToGitHub(profileData);
+    alert("Profile submitted for admin approval!");
 });
