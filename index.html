@@ -1,57 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home - My Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marriage Matchmaking</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Home Section -->
-  <section class="section">
-    <h1>Welcome to My Portfolio</h1>
-    <p>Explore my projects and skills.</p>
-  </section>
-
-  <!-- Portfolio Section -->
-  <section class="portfolio-container">
-    <div class="portfolio-item">
-      <div class="card">
-        <div class="card-front">
-          <h2>Project 1</h2>
-          <p>Click to see details</p>
-        </div>
-        <div class="card-back">
-          <h2>Project 1 Details</h2>
-          <p>This is a description of Project 1.</p>
-          <a href="#">View Project</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="portfolio-item">
-      <div class="card">
-        <div class="card-front">
-          <h2>Project 2</h2>
-          <p>Click to see details</p>
-        </div>
-        <div class="card-back">
-          <h2>Project 2 Details</h2>
-          <p>This is a description of Project 2.</p>
-          <a href="#">View Project</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Bottom Navigation Buttons -->
-  <footer class="bottom-nav">
-    <a href="index.html" class="nav-button">Home</a>
-    <a href="dashboard.html" class="nav-button">Dashboard</a>
-    <a href="shop.html" class="nav-button">Shop</a>
-    <a href="contact.html" class="nav-button">Contact</a>
-  </footer>
-
-  <script src="script.js"></script>
+    <h2>Register Your Profile</h2>
+    <form id="profileForm">
+        <input type="text" id="name" placeholder="Your Name" required><br>
+        <input type="number" id="age" placeholder="Your Age" required><br>
+        <input type="text" id="location" placeholder="Your Location" required><br>
+        <input type="text" id="hobbies" placeholder="Your Hobbies (comma-separated)"><br>
+        <input type="text" id="interests" placeholder="Your Interests (comma-separated)"><br>
+        <input type="file" id="imageUpload" multiple accept="image/*"><br>
+        <div id="imagePreview"></div>
+        <button type="submit">Submit Profile</button>
+    </form>
+    <script src="script.js"></script>
 </body>
 </html>
