@@ -1,56 +1,28 @@
-// 🔥 Firebase Configuration
+// 🔥 Firebase Configuration (Ensure your API key is secured!)
 const firebaseConfig = {
-const firebaseConfig = {
-  apiKey: "AIzaSyA1eKzgwOTIZMMIUfbEDQBqgmY88cQCfy0",
-  authDomain: "ctok-app.firebaseapp.com",
-  projectId: "ctok-app",
-  storageBucket: "ctok-app.firebasestorage.app",
-  messagingSenderId: "991407836421",
-  appId: "1:991407836421:web:5f8c275e0168ba573ffb6c"
+    apiKey: "YOUR_NEW_API_KEY",
+    authDomain: "ctok-app.firebaseapp.com",
+    projectId: "ctok-app",
+    storageBucket: "ctok-app.appspot.com",
+    messagingSenderId: "991407836421",
+    appId: "1:991407836421:web:5f8c275e0168ba573ffb6c"
 };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
 
-const GITHUB_REPO = "Ceodevcop/CTok";
-
-// Generate Unique UID (iDEV<CountryAbbr>000001)
+// Generate Unique UID (Format: iDEV<CountryAbbr>000001)
 async function generateUID(country) {
-    const countryAbbr = getCountryAbbreviation(country);
-    if (!countryAbbr) {
-        alert("Invalid country name!");
-        return null;
-    }
-
-    // Fetch existing profiles from GitHub
-    const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_REPO}/main/profiles.json`);
-    const profiles = response.ok ? await response.json() : [];
-
-    // Find the last UID used for this country
-    const filteredProfiles = profiles.filter(p => p.uid.startsWith(`iDEV${countryAbbr}`));
-    const lastUID = filteredProfiles.length > 0 ? filteredProfiles[filteredProfiles.length - 1].uid : `iDEV${countryAbbr}000000`;
-
-    // Generate next UID
-    const nextNumber = parseInt(lastUID.slice(-6)) + 1;
-    if (nextNumber > 999999) {
-        alert("UID limit reached for this country!");
-        return null;
-    }
-
+    const countryAbbr = country.substring(0, 3).toUpperCase();
+    const profilesRef = db.collection("profiles");
+    const snapshot = await profilesRef.where("uid", ">=", `iDEV${countryAbbr}`).get();
+    const nextNumber = snapshot.size + 1;
     return `iDEV${countryAbbr}${String(nextNumber).padStart(6, "0")}`;
 }
 
-// Get Country Abbreviation
-function getCountryAbbreviation(country) {
-    const countryMap = {
-        "United States": "USA", "India": "IND", "Nigeria": "NGA", "Canada": "CAN", "United Kingdom": "GBR",
-        "France": "FRA", "Germany": "DEU", "Brazil": "BRA", "China": "CHN", "Japan": "JPN"
-    };
-    return countryMap[country] || null;
-}
-
-// Handle User Registration
+// Handle Profile Submission
 document.getElementById("profileForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -66,40 +38,11 @@ document.getElementById("profileForm").addEventListener("submit", async function
 
     const profileData = { uid, name, age, location, country, hobbies, interests, approved: false };
 
-    // Save to Firebase Firestore
     await db.collection("profiles").doc(uid).set(profileData);
-    
-    // Update GitHub (Placeholder)
-    await saveProfileToGitHub(profileData);
-
-    alert(`Profile submitted! Your UID is: ${uid}`);
+    alert(`Profile Submitted! Your UID: ${uid}`);
 });
 
-// Save Profile to GitHub (GitHub API Authentication Required)
-async function saveProfileToGitHub(profileData) {
-    console.log("Saving profile to GitHub (placeholder function):", profileData);
-}
-
-// Handle Admin Approval
-async function approveProfile(uid) {
-    await db.collection("profiles").doc(uid).update({ approved: true });
-    alert(`Profile ${uid} Approved!`);
-}
-
-// Chat System
-document.getElementById("chatForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-    const message = document.getElementById("chatMessage").value;
-    document.getElementById("chatBox").innerHTML += `<p>User: ${message}</p>`;
-    document.getElementById("chatMessage").value = "";
-});
-
-// Admin Chat Monitoring
-function viewAllChats() {
-    console.log("Admin viewing all chats...");
-}
-
-// Handle Image Upload (Max 4 images, 1MB each)
+// Upload Images (Max 4, 1MB Each)
 document.getElementById("imageUpload").addEventListener("change", async function (event) {
     const files = event.target.files;
     if (files.length > 4) {
@@ -118,3 +61,22 @@ document.getElementById("imageUpload").addEventListener("change", async function
         console.log("Image uploaded:", file.name);
     }
 });
+
+// Approve Profile (Admin)
+async function approveProfile(uid) {
+    await db.collection("profiles").doc(uid).update({ approved: true });
+    alert(`Profile ${uid} Approved!`);
+}
+
+// Handle User Chat Submission
+document.getElementById("chatForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const message = document.getElementById("chatMessage").value;
+    document.getElementById("chatBox").innerHTML += `<p>User: ${message}</p>`;
+    document.getElementById("chatMessage").value = "";
+});
+
+// Admin Chat Monitoring
+function viewAllChats() {
+    console.log("Admin viewing all chats...");
+}
