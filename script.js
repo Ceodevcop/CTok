@@ -1,4 +1,4 @@
-const GITHUB_REPO = "username/matchmaking-site";
+const GITHUB_REPO = "Ceodevcop/CTok";
 
 // Generate Unique UID
 async function generateUID(country) {
