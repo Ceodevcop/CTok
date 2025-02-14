@@ -14,6 +14,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDbStW7WxMlSnAQwIZpfJQLJ2Q_857JaLs",
+    authDomain: "c-tok-8a593.firebaseapp.com",
+    projectId: "c-tok-8a593",
+    storageBucket: "c-tok-8a593.firebasestorage.app",
+    messagingSenderId: "53075782381",
+    appId: "1:53075782381:web:abdeedd3833ae53d847ae4"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+    </script>
     <h2>Register Your Profile</h2>
     <form id="profileForm">
         <input type="text" id="name" placeholder="Your Name" required><br>
