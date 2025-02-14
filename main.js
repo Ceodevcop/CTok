@@ -1,13 +1,13 @@
 // 🔥 Firebase Configuration
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+const firebaseConfig = {
+  apiKey: "AIzaSyA1eKzgwOTIZMMIUfbEDQBqgmY88cQCfy0",
+  authDomain: "ctok-app.firebaseapp.com",
+  projectId: "ctok-app",
+  storageBucket: "ctok-app.firebasestorage.app",
+  messagingSenderId: "991407836421",
+  appId: "1:991407836421:web:5f8c275e0168ba573ffb6c"
 };
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
