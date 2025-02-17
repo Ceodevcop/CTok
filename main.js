@@ -7,6 +7,9 @@ const firebaseConfig = {
     messagingSenderId: "991407836421",
     appId: "1:991407836421:web:5f8c275e0168ba573ffb6c"
 };
+//pi Network 
+const PiNetwork = window.Pi;
+PiNetwork.init({ version: "2.0", sandbox: true });
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
