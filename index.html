@@ -4,26 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pi-Store</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
 <body>
 
-<h2>Pi-Store</h2>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <h2>Pi-Store</h2>
+        <ul>
+            <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
+            <li><a href="#" onclick="showPage('assets')">List Digital Asset</a></li>
+            <li><a href="#" onclick="showPage('invest')">Invest Pi</a></li>
+            <li><a href="#" onclick="showPage('swap')">Swap Pi</a></li>
+            <li><a href="#" onclick="showPage('admin')">Admin Panel</a></li>
+        </ul>
+    </div>
 
-<div id="user">
-    <button onclick="connectPi()">Connect Pi Account</button>
-    <button onclick="listAsset()">List Digital Asset</button>
-    <button onclick="investPi()">Invest Pi</button>
-    <button onclick="swapPi()">Swap Pi to Naira</button>
-</div>
+    <!-- Main Content -->
+    <div id="main">
+        <div id="dashboard" class="page">
+            <h2>Welcome to Pi-Store</h2>
+            <button onclick="connectPi()">Connect Pi Account</button>
+        </div>
 
-<div id="admin" class="hidden">
-    <h2>Admin Panel</h2>
-    <h3>Pending Transactions</h3>
-    <ul id="pendingTransactions"></ul>
-</div>
+        <div id="assets" class="page hidden">
+            <h2>List Digital Asset</h2>
+            <button onclick="listAsset()">Upload Asset</button>
+        </div>
+
+        <div id="invest" class="page hidden">
+            <h2>Invest Pi</h2>
+            <button onclick="investPi()">Invest Now</button>
+        </div>
+
+        <div id="swap" class="page hidden">
+            <h2>Swap Pi to Naira</h2>
+            <button onclick="swapPi()">Swap Now</button>
+        </div>
+
+        <div id="admin" class="page hidden">
+            <h2>Admin Panel</h2>
+            <h3>Pending Transactions</h3>
+            <ul id="pendingTransactions"></ul>
+        </div>
+    </div>
 
 <script>
 // Firebase Configuration
@@ -35,27 +62,24 @@ const firebaseConfig = {
     messagingSenderId: "YOUR_SENDER_ID",
     appId: "YOUR_APP_ID"
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Functions for Transactions
+// Sidebar Navigation
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+    document.getElementById(pageId).classList.remove('hidden');
+}
+
+// Investment Function
 function investPi() {
     let amount = prompt("Enter amount (5-100 Pi):");
     if (amount < 5 || amount > 100) return alert("Invalid amount!");
-
     db.collection("transactions").add({ user: "test-user", amount, status: "pending" });
-
-    fetch("https://YOUR_FIREBASE_FUNCTION_URL/sendEmail", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user: "test-user", subject: "Investment Requested", message: `You invested ${amount} Pi.`, type: "transaction", amount })
-    });
-
     alert("Investment Request Sent");
 }
 
-// Admin Approve/Reject
+// Fetch Pending Transactions
 db.collection("transactions").where("status", "==", "pending").onSnapshot(snapshot => {
     document.getElementById("pendingTransactions").innerHTML = "";
     snapshot.forEach(doc => {
@@ -63,31 +87,24 @@ db.collection("transactions").where("status", "==", "pending").onSnapshot(snapsh
         let listItem = document.createElement("li");
         listItem.innerHTML = `
             ${transaction.user} - ${transaction.amount} Pi
-            <button onclick="approveTransaction('${doc.id}', '${transaction.user}', ${transaction.amount})">Approve</button>
-            <button onclick="rejectTransaction('${doc.id}', '${transaction.user}', ${transaction.amount})">Reject</button>
+            <button onclick="approveTransaction('${doc.id}')">Approve</button>
+            <button onclick="rejectTransaction('${doc.id}')">Reject</button>
         `;
         document.getElementById("pendingTransactions").appendChild(listItem);
     });
 });
 
-function approveTransaction(transactionId, user, amount) {
+// Approve & Reject Transactions
+function approveTransaction(transactionId) {
     db.collection("transactions").doc(transactionId).update({ status: "approved" });
-
-    fetch("https://YOUR_FIREBASE_FUNCTION_URL/sendSMS", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: "+123456789", message: `Transaction Approved: ${amount} Pi` })
-    });
-
     alert("Transaction Approved");
 }
 
-function rejectTransaction(transactionId, user, amount) {
+function rejectTransaction(transactionId) {
     db.collection("transactions").doc(transactionId).update({ status: "rejected" });
-
     alert("Transaction Rejected");
 }
 </script>
 
 </body>
-</html>
+</htm
