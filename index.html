@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pi-Store</title>
+    <title>Dashboard - Pi-Store</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 </head>
 <body>
 
@@ -15,77 +12,31 @@
     <div id="sidebar">
         <h2>Pi-Store</h2>
         <button id="toggleSidebar">☰</button>
+
+        <!-- Pi Wallet Balance -->
+        <div id="walletBalance">
+            <h3>Balance: <span id="piBalance">Loading...</span> Pi</h3>
+        </div>
+
         <ul>
-            <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
-            <li><a href="#" onclick="showPage('assets')">List Digital Asset</a></li>
-            <li><a href="#" onclick="showPage('invest')">Invest Pi</a></li>
-            <li><a href="#" onclick="showPage('swap')">Swap Pi</a></li>
-            <li><a href="#" onclick="showPage('admin')">Admin Panel</a></li>
+            <li><button onclick="location.href='index.html'">Dashboard</button></li>
+            <li><button onclick="location.href='assets.html'">List Digital Asset</button></li>
+            <li><button onclick="location.href='invest.html'">Invest Pi</button></li>
+            <li><button onclick="location.href='swap.html'">Swap Pi</button></li>
+            <li><button onclick="location.href='admin.html'">Admin Panel</button></li>
         </ul>
     </div>
 
     <!-- Main Content -->
     <div id="main">
-        <div id="wallet">
-            <h3>Your Pi Balance: <span id="piBalance">Loading...</span> Pi</h3>
-        </div>
-
-        <div id="dashboard" class="page">
-            <h2>Welcome to Pi-Store</h2>
-            <button onclick="connectPi()">Connect Pi Account</button>
-        </div>
-
-        <div id="assets" class="page hidden">
-            <h2>List Digital Asset</h2>
-            <button onclick="listAsset()">Upload Asset</button>
-        </div>
-
-        <div id="invest" class="page hidden">
-            <h2>Invest Pi</h2>
-            <button onclick="investPi()">Invest Now</button>
-        </div>
-
-        <div id="swap" class="page hidden">
-            <h2>Swap Pi to Naira</h2>
-            <button onclick="swapPi()">Swap Now</button>
-        </div>
-
-        <div id="admin" class="page hidden">
-            <h2>Admin Panel</h2>
-            <h3>Pending Transactions</h3>
-            <ul id="pendingTransactions"></ul>
-        </div>
+        <h2>Welcome to Pi-Store Dashboard</h2>
+        <button onclick="connectPi()">Connect Pi Account</button>
     </div>
 
 <script>
-// Firebase Configuration
-const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// Sidebar Toggle
-document.getElementById("toggleSidebar").addEventListener("click", function() {
-    document.getElementById("sidebar").classList.toggle("collapsed");
-});
-
-// Page Navigation
-function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
-    document.getElementById(pageId).classList.remove('hidden');
-}
-
-// Fetch Pi Wallet Balance (Dummy Data)
 function fetchPiBalance() {
-    // Replace with actual Pi Network API integration
     setTimeout(() => {
-        document.getElementById("piBalance").innerText = "3.5"; // Example balance
+        document.getElementById("piBalance").innerText = "3.5";
     }, 1000);
 }
 fetchPiBalance();
