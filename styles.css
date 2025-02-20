@@ -1,56 +1,77 @@
-/* General Styling */
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    display: flex;
     background-color: #f4f4f4;
 }
 
+/* CSS Grid Layout */
+.grid-container {
+    display: grid;
+    grid-template-areas: 
+        "header header"
+        "sidebar content"
+        "footer footer";
+    grid-template-columns: 25% 75%;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    grid-area: header;
+    background: #FFD700;
+    color: black;
+    text-align: center;
+    padding: 20px;
+    font-size: 24px;
+}
+
 /* Sidebar */
-#sidebar {
-    width: 25%;
-    max-width: 300px;
-    min-width: 250px;
-    height: 100vh;
+.sidebar {
+    grid-area: sidebar;
     background-color: #222;
     color: white;
     padding: 20px;
-    position: fixed;
-    transition: width 0.3s, opacity 0.3s;
-    display: flex;
-    flex-direction: column;
+    height: 100vh;
+    transition: width 0.3s ease-in-out;
 }
 
-#sidebar.collapsed {
-    width: 0;
-    opacity: 0;
+.sidebar ul {
+    list-style: none;
     padding: 0;
-    overflow: hidden;
+}
+
+.sidebar ul li {
+    padding: 10px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.sidebar ul li a:hover {
+    background: #444;
 }
 
 /* Sidebar Toggle Button */
 #toggleSidebar {
-    position: absolute;
-    top: 15px;
-    right: -40px;
     background: #FFD700;
     border: none;
     color: black;
     font-size: 16px;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 10px;
     border-radius: 5px;
-    transition: right 0.3s;
-}
-
-#sidebar.collapsed #toggleSidebar {
-    right: 10px;
+    margin-bottom: 20px;
 }
 
 /* Pi Wallet Balance */
 #walletBalance {
     text-align: center;
-    margin: 20px 0;
     padding: 10px;
     background: #FFD700;
     color: black;
@@ -58,76 +79,36 @@ body {
     border-radius: 5px;
 }
 
-/* Sidebar Buttons */
-#sidebar ul {
-    list-style-type: none;
-    padding: 0;
-    flex-grow: 1;
-}
-
-#sidebar ul li {
-    padding: 10px;
-    text-align: center;
-}
-
-#sidebar ul li button {
-    width: 100%;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 16px;
-    padding: 10px;
-    cursor: pointer;
-    transition: background 0.3s;
-    text-align: left;
-}
-
-#sidebar ul li button:hover {
-    background-color: #444;
-}
-
-/* Main Content */
-#main {
-    margin-left: 25%;
+/* Content */
+.content {
+    grid-area: content;
     padding: 20px;
-    flex-grow: 1;
-    transition: margin-left 0.3s;
 }
 
-#sidebar.collapsed ~ #main {
-    margin-left: 0;
-}
-
-/* Buttons */
-button {
-    background-color: #FFD700;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #FFA500;
+/* Footer */
+.footer {
+    grid-area: footer;
+    background: #FFD700;
+    color: black;
+    text-align: center;
+    padding: 10px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    #sidebar {
-        width: 75%;
+    .grid-container {
+        grid-template-areas: 
+            "header"
+            "content"
+            "sidebar"
+            "footer";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto auto;
     }
 
-    #sidebar.collapsed {
-        width: 0;
-    }
-
-    #main {
-        margin-left: 75%;
-    }
-
-    #sidebar.collapsed ~ #main {
-        margin-left: 0;
+    .sidebar {
+        width: 100%;
+        height: auto;
+        text-align: center;
     }
 }
