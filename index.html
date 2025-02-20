@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pi-Store</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+</head>
+<body>
+
+<h2>Pi-Store</h2>
+
+<div id="user">
+    <button onclick="connectPi()">Connect Pi Account</button>
+    <button onclick="listAsset()">List Digital Asset</button>
+    <button onclick="investPi()">Invest Pi</button>
+    <button onclick="swapPi()">Swap Pi to Naira</button>
+</div>
+
+<div id="admin" class="hidden">
+    <h2>Admin Panel</h2>
+    <h3>Pending Transactions</h3>
+    <ul id="pendingTransactions"></ul>
+</div>
+
+<script>
+// Firebase Configuration
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Functions for Transactions
+function investPi() {
+    let amount = prompt("Enter amount (5-100 Pi):");
+    if (amount < 5 || amount > 100) return alert("Invalid amount!");
+
+    db.collection("transactions").add({ user: "test-user", amount, status: "pending" });
+
+    fetch("https://YOUR_FIREBASE_FUNCTION_URL/sendEmail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user: "test-user", subject: "Investment Requested", message: `You invested ${amount} Pi.`, type: "transaction", amount })
+    });
+
+    alert("Investment Request Sent");
+}
+
+// Admin Approve/Reject
+db.collection("transactions").where("status", "==", "pending").onSnapshot(snapshot => {
+    document.getElementById("pendingTransactions").innerHTML = "";
+    snapshot.forEach(doc => {
+        let transaction = doc.data();
+        let listItem = document.createElement("li");
+        listItem.innerHTML = `
+            ${transaction.user} - ${transaction.amount} Pi
+            <button onclick="approveTransaction('${doc.id}', '${transaction.user}', ${transaction.amount})">Approve</button>
+            <button onclick="rejectTransaction('${doc.id}', '${transaction.user}', ${transaction.amount})">Reject</button>
+        `;
+        document.getElementById("pendingTransactions").appendChild(listItem);
+    });
+});
+
+function approveTransaction(transactionId, user, amount) {
+    db.collection("transactions").doc(transactionId).update({ status: "approved" });
+
+    fetch("https://YOUR_FIREBASE_FUNCTION_URL/sendSMS", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: "+123456789", message: `Transaction Approved: ${amount} Pi` })
+    });
+
+    alert("Transaction Approved");
+}
+
+function rejectTransaction(transactionId, user, amount) {
+    db.collection("transactions").doc(transactionId).update({ status: "rejected" });
+
+    alert("Transaction Rejected");
+}
+</script>
+
+</body>
+</html>
