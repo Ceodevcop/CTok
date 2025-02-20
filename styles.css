@@ -7,7 +7,7 @@ body {
 
 /* Sidebar */
 #sidebar {
-    width: 250px;
+    width: 25px;
     height: 100vh;
     background-color: #333;
     color: white;
@@ -17,7 +17,7 @@ body {
 }
 
 #sidebar.collapsed {
-    width: 60px;
+    width: 2px;
 }
 
 #sidebar h2 {
