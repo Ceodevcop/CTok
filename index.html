@@ -14,6 +14,7 @@
     <!-- Sidebar -->
     <div id="sidebar">
         <h2>Pi-Store</h2>
+        <button id="toggleSidebar">☰</button>
         <ul>
             <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
             <li><a href="#" onclick="showPage('assets')">List Digital Asset</a></li>
@@ -25,6 +26,10 @@
 
     <!-- Main Content -->
     <div id="main">
+        <div id="wallet">
+            <h3>Your Pi Balance: <span id="piBalance">Loading...</span> Pi</h3>
+        </div>
+
         <div id="dashboard" class="page">
             <h2>Welcome to Pi-Store</h2>
             <button onclick="connectPi()">Connect Pi Account</button>
@@ -65,46 +70,26 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Sidebar Navigation
+// Sidebar Toggle
+document.getElementById("toggleSidebar").addEventListener("click", function() {
+    document.getElementById("sidebar").classList.toggle("collapsed");
+});
+
+// Page Navigation
 function showPage(pageId) {
     document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
     document.getElementById(pageId).classList.remove('hidden');
 }
 
-// Investment Function
-function investPi() {
-    let amount = prompt("Enter amount (5-100 Pi):");
-    if (amount < 5 || amount > 100) return alert("Invalid amount!");
-    db.collection("transactions").add({ user: "test-user", amount, status: "pending" });
-    alert("Investment Request Sent");
+// Fetch Pi Wallet Balance (Dummy Data)
+function fetchPiBalance() {
+    // Replace with actual Pi Network API integration
+    setTimeout(() => {
+        document.getElementById("piBalance").innerText = "3.5"; // Example balance
+    }, 1000);
 }
-
-// Fetch Pending Transactions
-db.collection("transactions").where("status", "==", "pending").onSnapshot(snapshot => {
-    document.getElementById("pendingTransactions").innerHTML = "";
-    snapshot.forEach(doc => {
-        let transaction = doc.data();
-        let listItem = document.createElement("li");
-        listItem.innerHTML = `
-            ${transaction.user} - ${transaction.amount} Pi
-            <button onclick="approveTransaction('${doc.id}')">Approve</button>
-            <button onclick="rejectTransaction('${doc.id}')">Reject</button>
-        `;
-        document.getElementById("pendingTransactions").appendChild(listItem);
-    });
-});
-
-// Approve & Reject Transactions
-function approveTransaction(transactionId) {
-    db.collection("transactions").doc(transactionId).update({ status: "approved" });
-    alert("Transaction Approved");
-}
-
-function rejectTransaction(transactionId) {
-    db.collection("transactions").doc(transactionId).update({ status: "rejected" });
-    alert("Transaction Rejected");
-}
+fetchPiBalance();
 </script>
 
 </body>
-</htm
+</html>
