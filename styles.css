@@ -1,114 +1,113 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f4f4f4;
 }
 
 /* CSS Grid Layout */
 .grid-container {
-    display: grid;
-    grid-template-areas: 
-        "head head head"
-        "side content content"
-        "foot foot foot";
-    grid-template-columns: 25% 75%;
-    grid-template-rows: 50px auto 50px;
-    min-height: 100vh;
+  display: grid;
+  grid-template-areas:
+    "head head head"
+    "side content content"
+    "foot foot foot";
+  grid-template-columns: 25% 75%;
+  grid-template-rows: 50px auto 50px;
+  min-height: 100vh;
 }
 
 /* Header */
 .header {
-    grid-area: head;
-    background: #FFD700;
-    color: black;
-    text-align: center;
-    padding: 10px;
-    font-size: 24px;
+  grid-area: head;
+  background: #FFD700;
+  color: black;
+  text-align: center;
+  padding: 10px;
+  font-size: 24px;
 }
 
 /* Sidebar */
 .sidebar {
-    grid-area: side;
-    background-color: #222;
-    color: white;
-    padding: 20px;
-    height: 100vh;
-    transition: width 0.3s ease-in-out;
+  grid-area: side;
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  transition: width 0.3s ease-in-out;
 }
 
 .sidebar ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .sidebar ul li {
-    padding: 10px;
+  padding: 10px;
 }
 
 .sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
 }
 
 .sidebar ul li a:hover {
-    background: #444;
+  background: #444;
 }
 
 /* Sidebar Toggle Button */
 #toggleSidebar {
-    background: #FFD700;
-    border: none;
-    color: black;
-    font-size: 16px;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+  background: #FFD700;
+  border: none;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 /* Pi Wallet Balance */
 #walletBalance {
-    text-align: center;
-    padding: 10px;
-    background: #FFD700;
-    color: black;
-    font-weight: bold;
-    border-radius: 5px;
+  text-align: center;
+  padding: 10px;
+  background: #FFD700;
+  color: black;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 /* Content */
 .content {
-    grid-area: content;
-    padding: 20px;
+  grid-area: content;
+  padding: 20px;
 }
 
 /* Footer */
 .footer {
-    grid-area: foot;
-    background: #FFD700;
-    color: black;
-    text-align: center;
-    padding: 10px;
+  grid-area: foot;
+  background: #FFD700;
+  color: black;
+  text-align: center;
+  padding: 10px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .grid-container {
-        grid-template-areas: 
-            "head"
-            "content"
-            "side"
-            "foot";
-        grid-template-columns: 1fr;
-        grid-template-rows: 50px auto auto 50px;
-    }
+  .grid-container {
+    grid-template-areas:
+      "head"
+      "content"
+      "side"
+      "foot";
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px auto auto 50px;
+  }
 
-    .sidebar {
-        width: 100%;
-        height: auto;
-        text-align: center;
-    }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    text-align: center;
+  }
 }
