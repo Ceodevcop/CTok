@@ -3,29 +3,35 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     display: flex;
+    background-color: #f4f4f4;
 }
 
 /* Sidebar */
 #sidebar {
-    width: 25px;
+    width: 250px;
     height: 100vh;
-    background-color: #333;
+    background-color: #222;
     color: white;
     padding: 20px;
     position: fixed;
     transition: width 0.3s;
+    display: flex;
+    flex-direction: column;
 }
 
 #sidebar.collapsed {
-    width: 2px;
+    width: 60px;
+    overflow: hidden;
 }
 
 #sidebar h2 {
     text-align: center;
     color: #FFD700;
+    margin-bottom: 20px;
 }
 
-#sidebar button {
+/* Sidebar Toggle Button */
+#toggleSidebar {
     background: none;
     border: none;
     color: white;
@@ -35,22 +41,42 @@ body {
     margin: 10px auto;
 }
 
+/* Pi Wallet Balance */
+#walletBalance {
+    text-align: center;
+    margin: 20px 0;
+    padding: 10px;
+    background: #FFD700;
+    color: black;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Sidebar Buttons */
 #sidebar ul {
     list-style-type: none;
     padding: 0;
+    flex-grow: 1;
 }
 
 #sidebar ul li {
     padding: 10px;
+    text-align: center;
 }
 
-#sidebar ul li a {
+#sidebar ul li button {
+    width: 100%;
+    background: none;
+    border: none;
     color: white;
-    text-decoration: none;
-    display: block;
+    font-size: 16px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-align: left;
 }
 
-#sidebar ul li:hover {
+#sidebar ul li button:hover {
     background-color: #444;
 }
 
@@ -59,24 +85,11 @@ body {
     margin-left: 260px;
     padding: 20px;
     flex-grow: 1;
+    transition: margin-left 0.3s;
 }
 
-/* Wallet Balance */
-#wallet {
-    background-color: #FFD700;
-    padding: 10px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-/* Pages */
-.page {
-    display: block;
-}
-
-.hidden {
-    display: none;
+#sidebar.collapsed ~ #main {
+    margin-left: 70px;
 }
 
 /* Buttons */
@@ -87,8 +100,28 @@ button {
     cursor: pointer;
     font-size: 16px;
     margin-top: 10px;
+    border-radius: 5px;
 }
 
 button:hover {
     background-color: #FFA500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 200px;
+    }
+
+    #sidebar.collapsed {
+        width: 50px;
+    }
+
+    #main {
+        margin-left: 220px;
+    }
+
+    #sidebar.collapsed ~ #main {
+        margin-left: 60px;
+    }
 }
