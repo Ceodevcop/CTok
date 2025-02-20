@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Digital Asset - Pi-Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="sidebar">
+        <h2>Pi-Store</h2>
+        <button id="toggleSidebar">☰</button>
+        <div id="walletBalance">
+            <h3>Balance: <span id="piBalance">Loading...</span> Pi</h3>
+        </div>
+        <ul>
+            <li><button onclick="location.href='index.html'">Dashboard</button></li>
+            <li><button onclick="location.href='assets.html'">List Digital Asset</button></li>
+            <li><button onclick="location.href='invest.html'">Invest Pi</button></li>
+            <li><button onclick="location.href='swap.html'">Swap Pi</button></li>
+            <li><button onclick="location.href='admin.html'">Admin Panel</button></li>
+        </ul>
+    </div>
+
+    <div id="main">
+        <h2>List Your Digital Asset</h2>
+        <button onclick="listAsset()">Upload Asset</button>
+    </div>
+
+<script>
+fetchPiBalance();
+</script>
+
+</body>
+</html>
