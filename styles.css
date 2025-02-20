@@ -13,11 +13,26 @@ body {
     color: white;
     padding: 20px;
     position: fixed;
+    transition: width 0.3s;
+}
+
+#sidebar.collapsed {
+    width: 60px;
 }
 
 #sidebar h2 {
     text-align: center;
     color: #FFD700;
+}
+
+#sidebar button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto;
 }
 
 #sidebar ul {
@@ -44,6 +59,15 @@ body {
     margin-left: 260px;
     padding: 20px;
     flex-grow: 1;
+}
+
+/* Wallet Balance */
+#wallet {
+    background-color: #FFD700;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 /* Pages */
