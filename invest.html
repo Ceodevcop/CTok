@@ -1,13 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invest Pi</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Invest Pi - Pi-Store</title>
+  <!-- Pi SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>Invest Your Pi</h2>
-    <button onclick="location.href='index.html'">Back to Home</button>
+  <main class="grid-container">
+    <header class="header">Header</header>
+
+    <aside class="sidebar">
+      <button id="toggleSidebar">☰</button>
+      <h2>Pi-Store</h2>
+
+      <div id="walletBalance">
+        <h3>Balance: <span id="piBalance">Loading...</span> Pi</h3>
+      </div>
+
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="assets.html">List Digital Asset</a></li>
+        <li><a href="invest.html">Invest Pi</a></li>
+        <li><a href="swap.html">Swap Pi</a></li>
+        <li><a href="admin.html">Admin Panel</a></li>
+      </ul>
+    </aside>
+
+    <article class="content">
+      <h1>Invest Pi</h1>
+      <p>Invest between 5 - 100 Pi.</p>
+      <input type="number" id="investAmount" placeholder="5 - 100 Pi" min="5" max="100">
+      <button onclick="investPi()">Invest Now</button>
+    </article>
+
+    <footer class="footer">Footer</footer>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
