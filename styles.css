@@ -9,27 +9,27 @@ body {
 .grid-container {
     display: grid;
     grid-template-areas: 
-        "header header"
-        "sidebar content"
-        "footer footer";
+        "head head head"
+        "side content content"
+        "foot foot foot";
     grid-template-columns: 25% 75%;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: 50px auto 50px;
     min-height: 100vh;
 }
 
 /* Header */
 .header {
-    grid-area: header;
+    grid-area: head;
     background: #FFD700;
     color: black;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     font-size: 24px;
 }
 
 /* Sidebar */
 .sidebar {
-    grid-area: sidebar;
+    grid-area: side;
     background-color: #222;
     color: white;
     padding: 20px;
@@ -87,7 +87,7 @@ body {
 
 /* Footer */
 .footer {
-    grid-area: footer;
+    grid-area: foot;
     background: #FFD700;
     color: black;
     text-align: center;
@@ -98,12 +98,12 @@ body {
 @media (max-width: 768px) {
     .grid-container {
         grid-template-areas: 
-            "header"
+            "head"
             "content"
-            "sidebar"
-            "footer";
+            "side"
+            "foot";
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr auto auto;
+        grid-template-rows: 50px auto auto 50px;
     }
 
     .sidebar {
