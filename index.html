@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Pi-Store</title>
+    <title>Pi-Store</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
         </div>
 
         <ul>
-            <li><button onclick="location.href='index.html'">Dashboard</button></li>
+            <li><button onclick="location.href='dashboard.html'">Dashboard</button></li>
             <li><button onclick="location.href='assets.html'">List Digital Asset</button></li>
             <li><button onclick="location.href='invest.html'">Invest Pi</button></li>
             <li><button onclick="location.href='swap.html'">Swap Pi</button></li>
@@ -27,20 +27,20 @@
         </ul>
     </div>
 
-    <!-- Main Content -->
-    <div id="main">
-        <h2>Welcome to Pi-Store Dashboard</h2>
-        <button onclick="connectPi()">Connect Pi Account</button>
-    </div>
+    <script>
+    // Sidebar Toggle
+    document.getElementById("toggleSidebar").addEventListener("click", function() {
+        document.getElementById("sidebar").classList.toggle("collapsed");
+    });
 
-<script>
-function fetchPiBalance() {
-    setTimeout(() => {
-        document.getElementById("piBalance").innerText = "3.5";
-    }, 1000);
-}
-fetchPiBalance();
-</script>
+    // Fetch Pi Wallet Balance (Dummy Data)
+    function fetchPiBalance() {
+        setTimeout(() => {
+            document.getElementById("piBalance").innerText = "3.5"; // Example balance
+        }, 1000);
+    }
+    fetchPiBalance();
+    </script>
 
 </body>
 </html>
