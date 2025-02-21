@@ -88,9 +88,9 @@ body {
 .footer {
   grid-area: foot;
   background: Black;
-  color: black;
+  color: white ;
   text-align: center;
-  padding: 10px;
+  padding: 5px;
 }
 
 /* Responsive Design */
