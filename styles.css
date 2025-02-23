@@ -1,39 +1,42 @@
-/* General Styles */
+/* General Styling */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background-color: #f4f4f4;
+  padding: 0;
+  background: #f4f4f4;
 }
 
-/* CSS Grid Layout */
+/* Grid Layout */
 .grid-container {
   display: grid;
+  grid-template-columns: 250px auto;
+  grid-template-rows: 60px auto 50px;
+  height: 100vh;
   grid-template-areas:
-    "head head head"
-    "side content content"
-    "foot foot foot";
-  grid-template-columns: 25% 75%;
-  grid-template-rows: 50px auto 50px;
-  min-height: 100vh;
+    "sidebar header"
+    "sidebar content"
+    "sidebar footer";
 }
 
 /* Header */
 .header {
-  grid-area: head;
-  background: #FFD700;
-  color: black;
-  text-align: center;
-  padding: 10px;
+  grid-area: header;
+  background: linear-gradient(145deg, #6e44ff, #a855f7);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 24px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Sidebar */
 .sidebar {
-  grid-area: side;
-  background-color: #222;
+  grid-area: sidebar;
+  background: #222;
   color: white;
-  padding: 20px;
-  transition: width 0.3s ease-in-out;
+  padding: 15px;
+  transition: transform 0.3s ease-in-out;
 }
 
 .sidebar ul {
@@ -49,65 +52,44 @@ body {
   color: white;
   text-decoration: none;
   display: block;
-  padding: 10px;
+  transition: 0.3s;
 }
 
 .sidebar ul li a:hover {
   background: #444;
+  padding-left: 10px;
 }
 
-/* Sidebar Toggle Button */
-#toggleSidebar {
-  background: #FFD700;
+/* 3D Buttons */
+button {
+  background: linear-gradient(145deg, #ff8c00, #ff3d00);
+  color: white;
   border: none;
-  color: black;
+  padding: 12px 20px;
+  border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 20px;
+  transition: transform 0.2s ease;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Pi Wallet Balance */
-#walletBalance {
-  text-align: center;
-  padding: 10px;
-  background: #FFD700;
-  color: black;
-  font-weight: bold;
-  border-radius: 5px;
+button:active {
+  transform: scale(0.95);
 }
 
 /* Content */
 .content {
   grid-area: content;
   padding: 20px;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Footer */
 .footer {
-  grid-area: foot;
-  background: Black;
-  color: white ;
+  grid-area: footer;
+  background: #111;
+  color: white;
   text-align: center;
-  padding: 5px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .grid-container {
-    grid-template-areas:
-      "head"
-      "content"
-      "side"
-      "foot";
-    grid-template-columns: 1fr;
-    grid-template-rows: 50px auto auto 50px;
-  }
-
-  .sidebar {
-    width: 100%;
-    height: auto;
-    text-align: center;
-  }
+  line-height: 50px;
 }
