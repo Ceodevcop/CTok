@@ -1,71 +1,21 @@
-// Access the Pi object from the global window
-const Pi = window.Pi;
-
-// Initialize the Pi SDK
-Pi.init({
-  version: "2.0",
-  sandbox: true,  // true = Test environment (Test-Pi), set to false for Production
-  onReady: () => {
-    console.log("Pi SDK is ready!");
-  },
+document.getElementById("toggleSidebar").addEventListener("click", function () {
+  document.querySelector(".sidebar").classList.toggle("hidden");
 });
 
-/**
- * Connect Pi Wallet:
- * Prompts user to authenticate with Pi Network (username + payments).
- */
+// Pi Wallet Connection
 async function connectPiWallet() {
+  const appId = "YOUR_PI_APP_ID"; // Replace with your API Key
+  const scopes = ["username", "payments"];
+
   try {
-    const scopes = ["username", "payments"];
-    // 'onIncompletePaymentFound' handles any incomplete payments discovered
-    const user = await Pi.authenticate(scopes, onIncompletePaymentFound);
-    console.log("User authenticated:", user);
-    alert(`Welcome, ${user.username}! Your Pi wallet is connected.`);
-  } catch (error) {
-    console.error("Error connecting Pi wallet:", error);
-    alert("Failed to connect Pi wallet.");
-  }
-}
-
-/**
- * Incomplete Payment Callback:
- * This function runs if the Pi SDK detects an unfinished payment flow.
- */
-function onIncompletePaymentFound(payment) {
-  console.log("Incomplete payment found:", payment);
-  // You can choose to complete or cancel the payment here
-}
-
-// Example function to create a payment
-async function makePayment(amount) {
-  try {
-    const payment = await Pi.createPayment({
-      amount: amount,
-      memo: "Pi-Store Payment",
-      metadata: { purpose: "Web3 DApp" },
+    Pi.init({ version: "2.0", sandbox: false });
+    const authResult = await Pi.authenticate(scopes, (user) => {
+      console.log("User:", user);
+      document.getElementById("piBalance").textContent = "Connected";
     });
-    console.log("Payment created:", payment);
-    alert(`Payment of ${amount} Pi created successfully!`);
+
+    console.log("Auth Success:", authResult);
   } catch (error) {
-    console.error("Payment Error:", error);
-    alert("Failed to create payment.");
+    console.error("Pi Connection Error:", error);
   }
 }
-
-// Sidebar toggle (optional if you have a toggle button in your HTML)
-document.addEventListener("DOMContentLoaded", () => {
-  const toggleBtn = document.getElementById("toggleSidebar");
-  if (toggleBtn) {
-    toggleBtn.addEventListener("click", () => {
-      document.querySelector(".sidebar").classList.toggle("collapsed");
-    });
-  }
-
-  // Simulate Pi Balance (example)
-  const piBalanceSpan = document.getElementById("piBalance");
-  if (piBalanceSpan) {
-    setTimeout(() => {
-      piBalanceSpan.innerText = "3.5"; // Example balance
-    }, 1000);
-  }
-});
