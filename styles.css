@@ -1,3 +1,33 @@
+/* Sidebar */
+.sidebar {
+  grid-area: sidebar;
+  background: #222;
+  color: white;
+  padding: 15px;
+  width: 250px;
+  position: fixed;
+  height: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Hide sidebar when toggled */
+.sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+/* Toggle button */
+#toggleSidebar {
+  position: absolute;
+  left: 260px;
+  top: 10px;
+  background: #ff8c00;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 /* General Styling */
 body {
   font-family: Arial, sans-serif;
