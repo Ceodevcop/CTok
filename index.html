@@ -4,25 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pi-Store</title>
-  <!-- Pi SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
   <main class="grid-container">
-    <!-- Header -->
-    <header class="header">Header</header>
+    <header class="header">Pi-Store</header>
 
-    <!-- Sidebar -->
     <aside class="sidebar">
       <button id="toggleSidebar">☰</button>
       <h2>Pi-Store</h2>
-
-      <!-- Pi Wallet Balance -->
       <div id="walletBalance">
         <h3>Balance: <span id="piBalance">Loading...</span> Pi</h3>
       </div>
-
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="dashboard.html">Dashboard</a></li>
@@ -33,23 +27,14 @@
       </ul>
     </aside>
 
-    <!-- Content -->
     <article class="content">
       <h1>Build on Web3 for the Future</h1>
-      <p>
-        Use the Pi SDK to build decentralized applications that integrate 
-        with Pi Cryptocurrency and the Pi Platform.
-      </p>
-
-      <!-- Example: Connect Pi Wallet button -->
+      <p>Use the Pi SDK to build decentralized applications with Pi Cryptocurrency.</p>
       <button onclick="connectPiWallet()">Connect Pi Wallet</button>
     </article>
 
-    <!-- Footer -->
     <footer class="footer">Footer</footer>
   </main>
-
-  <!-- Shared Script -->
   <script src="script.js"></script>
 </body>
 </html>
