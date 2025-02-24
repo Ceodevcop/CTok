@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Fetch Wallet Balance
   async function fetchWalletBalance(accessToken) {
     try {
-      const apiKey = "YOUR_API_KEY_HERE"; // Replace with your actual API Key
+      const apiKey = "tclbcdljvy9ikhiha3uriqdvezwmdwsezplw3asgzhgkdmd3dm0bzjeak5fgghby"; // Replace with your actual API Key
       const response = await fetch("https://api.minepi.com/v2/me", {
         headers: {
           Authorization: `Bearer ${accessToken}`,
