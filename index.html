@@ -1,47 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pi-Store</title>
-  <!-- Pi SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css"/>
 </head>
-<body class="body-collapsed"> <!-- Start with sidebar open -->
-
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <button id="toggleSidebar">☰</button>
-    <h2>Pi-Store</h2>
-
-    <!-- Pi Wallet Balance -->
-    <div id="walletBalance">
-      <h3>Balance: <span id="piBalance">Loading...</span> Pi</h3>
-    </div>
-
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="dashboard.html">Dashboard</a></li>
-      <li><a href="assets.html">List Digital Asset</a></li>
-      <li><a href="invest.html">Invest Pi</a></li>
-      <li><a href="swap.html">Swap Pi</a></li>
-      <li><a href="admin.html">Admin Panel</a></li>
-    </ul>
-  </aside>
-
-  <!-- Main Content -->
-  <main class="content">
-    <h1>Build on Web3 for the Future</h1>
-    <p>Use the Pi SDK to build decentralized applications that integrate with Pi Cryptocurrency and the Pi Platform.</p>
+<body>
+  <main class="grid-container">
+    <header class="header">Header</header>
     
-    <!-- Connect Pi Wallet Button -->
-    <button id="connectWallet">Connect Pi Wallet</button>
+    <!-- Sidebar placeholder -->
+    <div id="sidebar-container"></div>
+
+    <article class="content">
+      <h1>Build on Web3 for the Future</h1>
+      <p>
+        Use the Pi SDK to build decentralized applications that integrate 
+        with Pi Cryptocurrency and the Pi Platform.
+      </p>
+      <button onclick="connectPiWallet()">Connect Pi Wallet</button>
+    </article>
+
+    <footer class="footer">Footer</footer>
   </main>
 
-  <!-- Footer -->
-  <footer class="footer">© 2025 Pi-Store</footer>
+  <!-- Load shared components first -->
+  <script>
+    // Load shared sidebar
+    fetch('sidebar-component.html')
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById('sidebar-container').innerHTML = html;
+        initializeSidebar();
+      });
+  </script>
 
+  <!-- Main scripts -->
   <script src="script.js"></script>
 </body>
 </html>
