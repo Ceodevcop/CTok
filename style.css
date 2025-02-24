@@ -1,4 +1,74 @@
-/* General Styles */
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(145deg, #1e1e1e, #292929);
+    color: white;
+    padding: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: 0.3s;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 0 20px 20px 0;
+}
+
+.sidebar.closed {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Toggle Button */
+.toggle-btn {
+    background: linear-gradient(145deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    position: absolute;
+    top: 15px;
+    right: -50px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.toggle-btn:hover {
+    background: #0056b3;
+}
+
+/* Adjust content when sidebar is closed */
+.main-content {
+    margin-left: 260px;
+    transition: margin-left 0.3s;
+}
+
+.main-content.shifted {
+    margin-left: 20px;
+}
+
+/* Responsive for small screens */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+    .main-content {
+        margin-left: 210px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: fixed;
+    }
+    .main-content {
+        margin-left: 0;
+    }
+}
+ 
+/* General Styles
 body {
   font-family: Arial, sans-serif;
   margin: 0;
