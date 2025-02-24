@@ -1,149 +1,102 @@
-
 // script.js
-function initializeSidebar() {
-  // Sidebar toggle functionality
-  const toggleBtn = document.getElementById('toggleSidebar');
-  const sidebar = document.querySelector('.sidebar');
-  
-  if (toggleBtn && sidebar) {
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
-      // Store state in localStorage
-      localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
-    });
 
-    // Load initial state
-    const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-    sidebar.classList.toggle('collapsed', isCollapsed);
-  }
-
-  // Update active link based on current page
-  const currentPage = window.location.pathname.split('/').pop();
-  document.querySelectorAll('.sidebar a').forEach(link => {
-    if (link.getAttribute('href') === currentPage) {
-      link.classList.add('active');
-    }
-  });
-}
-
-// Initialize Pi SDK and sidebar when component loads
 document.addEventListener('DOMContentLoaded', () => {
-  // Pi SDK Initialization
-  Pi.init({
-    version: "2.0",
-    sandbox: true,
-    onReady: () => {
-      console.log("Pi SDK is ready!");
-      // Load real balance when SDK is ready
-      loadPiBalance();
-    },
-  });
-
-  // Initialize balance display
-  const piBalanceSpan = document.getElementById('piBalance');
-  if (piBalanceSpan) {
-    piBalanceSpan.innerText = localStorage.getItem('piBalance') || 'Loading...';
-  }
-});
-
-async function loadPiBalance() {
-  // Simulated balance update - replace with actual API call
-  setTimeout(() => {
-    const balance = '3.5'; // Example balance
-    document.querySelectorAll('#piBalance').forEach(element => {
-      element.innerText = balance;
-    });
-    localStorage.setItem('piBalance', balance);
-  }, 1000);
-}
-
-// Keep existing Pi functions (connectPiWallet, makePayment, etc.)
-// ...// script.js (updated)
-document.addEventListener("DOMContentLoaded", () => {
-  const toggleBtn = document.getElementById("toggleSidebar");
-  
-  if (toggleBtn) {
-    toggleBtn.addEventListener("click", () => {
-      document.body.classList.toggle("sidebar-active");
-    });
-  }
-
-  // Pi Balance Simulation (replace with real data)
-  const piBalanceSpan = document.getElementById("piBalance");
-  if (piBalanceSpan) {
-    Pi.getBalance().then(balance => {
-      piBalanceSpan.textContent = balance.toFixed(2);
-    }).catch(() => {
-      piBalanceSpan.textContent = "3.14"; // Fallback
-    });
-  }
-});
-
-// Keep your existing Pi SDK functions...
-document.addEventListener("DOMContentLoaded", function () {
-  const sidebar = document.querySelector(".sidebar");
-  const body = document.body;
-  const toggleButton = document.getElementById("toggleSidebar");
-  const piBalanceElement = document.getElementById("piBalance");
-  const connectWalletButton = document.getElementById("connectWallet");
-
-  // Toggle Sidebar
-  toggleButton.addEventListener("click", function () {
-    sidebar.classList.toggle("hidden");
-
-    if (sidebar.classList.contains("hidden")) {
-      body.classList.remove("body-collapsed");
-      body.classList.add("body-expanded");
-    } else {
-      body.classList.remove("body-expanded");
-      body.classList.add("body-collapsed");
-    }
-  });
-
-  // Connect Pi Wallet Function
-  async function connectPiWallet() {
-    try {
-      const Pi = window.Pi;
-      if (!Pi) {
-        alert("Pi SDK not found!");
+  // Dashboard: Transaction form handling
+  const transactionForm = document.getElementById('transaction-form');
+  if (transactionForm) {
+    transactionForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const type = document.getElementById('transaction-type').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      if (isNaN(amount) || amount <= 0) {
+        alert('Please enter a valid amount.');
         return;
       }
-
-      Pi.init({ version: "2.0", sandbox: false });
-
-      const scopes = ["username", "payments"];
-      const authResult = await Pi.authenticate(scopes, function (res) {
-        console.log("Auth response:", res);
-      });
-
-      alert(`Welcome, ${authResult.user.username}!`);
-      fetchWalletBalance(authResult.accessToken);
-    } catch (error) {
-      console.error("Error connecting Pi Wallet:", error);
-    }
+      // Simulate processing the transaction
+      document.getElementById('transaction-result').innerText =
+        `Transaction: ${type.toUpperCase()} ${amount} Pi processed successfully.`;
+      updateWalletBalance(type, amount);
+    });
   }
 
-  // Fetch Wallet Balance
-  async function fetchWalletBalance(accessToken) {
-    try {
-      const apiKey = "tclbcdljvy9ikhiha3uriqdvezwmdwsezplw3asgzhgkdmd3dm0bzjeak5fgghby"; // Replace with your actual API Key
-      const response = await fetch("https://api.minepi.com/v2/me", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "X-API-Key": apiKey,
-        },
-      });
-
-      if (!response.ok) throw new Error("Failed to fetch balance");
-
-      const data = await response.json();
-      piBalanceElement.textContent = data.balance;
-    } catch (error) {
-      console.error("Error fetching wallet balance:", error);
-      piBalanceElement.textContent = "Error";
-    }
+  // Invest page: Investment form handling
+  const investForm = document.getElementById('invest-form');
+  if (investForm) {
+    investForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const amount = parseFloat(document.getElementById('invest-amount').value);
+      if (isNaN(amount) || amount <= 0) {
+        alert('Please enter a valid investment amount.');
+        return;
+      }
+      // Calculate 5% ROI
+      const roi = amount * 0.05;
+      document.getElementById('invest-result').innerText =
+        `Investment successful! In 24 hours, you will earn an additional ${roi.toFixed(2)} Pi.`;
+    });
   }
 
-  // Connect Wallet Button Click Event
-  connectWalletButton.addEventListener("click", connectPiWallet);
+  // Trade page: Trade form handling
+  const tradeForm = document.getElementById('trade-form');
+  if (tradeForm) {
+    tradeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const type = document.getElementById('trade-type').value;
+      const amount = parseFloat(document.getElementById('trade-amount').value);
+      if (isNaN(amount) || amount <= 0) {
+        alert('Please enter a valid trade amount.');
+        return;
+      }
+      document.getElementById('trade-result').innerText =
+        `Trade executed: ${type.toUpperCase()} ${amount} Pi.`;
+    });
+  }
+
+  // Wallet balance refresh button
+  const refreshButton = document.getElementById('refresh-balance');
+  if (refreshButton) {
+    refreshButton.addEventListener('click', () => {
+      fetchWalletBalance();
+    });
+  }
+
+  // Market page: Load dummy market data
+  const marketDataDiv = document.getElementById('market-data');
+  if (marketDataDiv) {
+    loadMarketData();
+  }
 });
+
+// Dummy wallet balance simulation
+let walletBalance = 100.0; // Starting balance
+
+function fetchWalletBalance() {
+  // Simulate an API call delay
+  setTimeout(() => {
+    document.getElementById('wallet-balance').innerText = `Balance: ${walletBalance.toFixed(2)} Pi`;
+  }, 500);
+}
+
+function updateWalletBalance(transactionType, amount) {
+  if (transactionType === 'buy') {
+    walletBalance += amount;
+  } else if (transactionType === 'sell') {
+    walletBalance = Math.max(0, walletBalance - amount);
+  }
+  fetchWalletBalance();
+}
+
+function loadMarketData() {
+  // Simulated market data
+  const data = {
+    currentPrice: 1.0, // For simulation: 1 Pi = 1 local currency unit
+    dailyChange: 0.02, // 2% change
+    volume: 5000
+  };
+  const marketDataDiv = document.getElementById('market-data');
+  marketDataDiv.innerHTML = `
+    <p>Current Price: ${data.currentPrice} LC per Pi</p>
+    <p>Daily Change: ${(data.dailyChange * 100).toFixed(2)}%</p>
+    <p>Trading Volume: ${data.volume} Pi</p>
+  `;
+}
