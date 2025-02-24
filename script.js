@@ -1,4 +1,64 @@
-// script.js (updated)
+
+// script.js
+function initializeSidebar() {
+  // Sidebar toggle functionality
+  const toggleBtn = document.getElementById('toggleSidebar');
+  const sidebar = document.querySelector('.sidebar');
+  
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      // Store state in localStorage
+      localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+    });
+
+    // Load initial state
+    const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+    sidebar.classList.toggle('collapsed', isCollapsed);
+  }
+
+  // Update active link based on current page
+  const currentPage = window.location.pathname.split('/').pop();
+  document.querySelectorAll('.sidebar a').forEach(link => {
+    if (link.getAttribute('href') === currentPage) {
+      link.classList.add('active');
+    }
+  });
+}
+
+// Initialize Pi SDK and sidebar when component loads
+document.addEventListener('DOMContentLoaded', () => {
+  // Pi SDK Initialization
+  Pi.init({
+    version: "2.0",
+    sandbox: true,
+    onReady: () => {
+      console.log("Pi SDK is ready!");
+      // Load real balance when SDK is ready
+      loadPiBalance();
+    },
+  });
+
+  // Initialize balance display
+  const piBalanceSpan = document.getElementById('piBalance');
+  if (piBalanceSpan) {
+    piBalanceSpan.innerText = localStorage.getItem('piBalance') || 'Loading...';
+  }
+});
+
+async function loadPiBalance() {
+  // Simulated balance update - replace with actual API call
+  setTimeout(() => {
+    const balance = '3.5'; // Example balance
+    document.querySelectorAll('#piBalance').forEach(element => {
+      element.innerText = balance;
+    });
+    localStorage.setItem('piBalance', balance);
+  }, 1000);
+}
+
+// Keep existing Pi functions (connectPiWallet, makePayment, etc.)
+// ...// script.js (updated)
 document.addEventListener("DOMContentLoaded", () => {
   const toggleBtn = document.getElementById("toggleSidebar");
   
