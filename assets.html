@@ -1,45 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>List Digital Asset - Pi-Store</title>
-  <!-- Pi SDK -->
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Market - Pi-Store</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="grid-container">
-    <header class="header">Header</header>
-
-    <aside class="sidebar">
-      <button id="toggleSidebar">☰</button>
-      <h2>Pi-Store</h2>
-
-      <div id="walletBalance">
-        <h3>Balance: <span id="piBalance">Loading...</span> Pi</h3>
-      </div>
-
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="assets.html">List Digital Asset</a></li>
-        <li><a href="invest.html">Invest Pi</a></li>
-        <li><a href="swap.html">Swap Pi</a></li>
-        <li><a href="admin.html">Admin Panel</a></li>
-      </ul>
-    </aside>
-
-    <article class="content">
-      <h1>List Your Digital Asset</h1>
-      <p>Upload images, videos, or apps here.</p>
-      <!-- Placeholder for file upload -->
-      <input type="file" id="assetFile">
-      <button onclick="uploadAsset()">Upload Asset</button>
-    </article>
-
-    <footer class="footer">Footer</footer>
-  </main>
-
+  <div class="sidebar">
+    <h2>Pi-Store</h2>
+    <ul>
+      <li><a href="index.html">Connect Wallet</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="invest.html">Invest</a></li>
+      <li><a href="trade.html">Trade</a></li>
+      <li><a href="market.html">Market</a></li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <h1>Pi Market Data</h1>
+    <div id="market-data">
+      <p>Loading market data...</p>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
