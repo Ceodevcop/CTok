@@ -1,4 +1,31 @@
+
 /* styles.css */
+.sidebar {
+  transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar ul li a.active {
+  background: #34495e;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.sidebar ul li a {
+  display: block;
+  padding: 12px 15px;
+  color: white;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.sidebar ul li a:hover {
+  background: #3b4f66;
+  transform: translateX(5px);
+}/* styles.css */
 * {
   margin: 0;
   padding: 0;
