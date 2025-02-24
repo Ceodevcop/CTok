@@ -60,7 +60,7 @@ body {
 
 /* Expand Main Content */
 .body-expanded {
-  margin-left: 100;
+  margin-left: 100%;
 }
 
 .body-collapsed {
