@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard - Pi-Store</title>
-  <!-- Pi SDK -->
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="grid-container">
-    <header class="header">Header</header>
-
-    <aside class="sidebar">
-      <button id="toggleSidebar">☰</button>
-      <h2>Pi-Store</h2>
-
-      <div id="walletBalance">
-        <h3>Balance: <span id="piBalance">Loading...</span> Pi</h3>
-      </div>
-
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="dashboard.html">Dashboard</a></li>
-        <li><a href="assets.html">List Digital Asset</a></li>
-        <li><a href="invest.html">Invest Pi</a></li>
-        <li><a href="swap.html">Swap Pi</a></li>
-        <li><a href="admin.html">Admin Panel</a></li>
-      </ul>
-    </aside>
-
-    <article class="content">
-      <h1>Dashboard</h1>
-      <p>Your Pi-Store overview goes here.</p>
-      <p>User info, recent transactions, etc.</p>
-    </article>
-
-    <footer class="footer">Footer</footer>
-  </main>
-
+  <div class="sidebar">
+    <h2>Pi-Store</h2>
+    <ul>
+      <li><a href="index.html">Connect Wallet</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="invest.html">Invest</a></li>
+      <li><a href="trade.html">Trade</a></li>
+      <li><a href="market.html">Market</a></li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <h1>Dashboard</h1>
+    <p>Manage your Pi transactions, trade, and swap.</p>
+    <div id="wallet-info">
+      <p id="wallet-balance">Balance: 0 Pi</p>
+      <button id="refresh-balance">Refresh Balance</button>
+    </div>
+    <hr />
+    <h2>Buy/Sell Pi</h2>
+    <form id="transaction-form">
+      <label for="transaction-type">Transaction Type:</label>
+      <select id="transaction-type">
+        <option value="buy">Buy</option>
+        <option value="sell">Sell</option>
+      </select>
+      <br />
+      <label for="amount">Amount (Pi):</label>
+      <input type="number" id="amount" min="0" step="0.01" />
+      <br />
+      <button type="submit">Execute Transaction</button>
+    </form>
+    <div id="transaction-result"></div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
