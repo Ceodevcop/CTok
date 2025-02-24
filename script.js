@@ -1,4 +1,12 @@
 // script.js
+function toggleSidebar() {
+    let sidebar = document.getElementById("sidebar");
+    let content = document.getElementById("main-content");
+
+    sidebar.classList.toggle("closed");
+    content.classList.toggle("shifted");
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
   // Dashboard: Transaction form handling
