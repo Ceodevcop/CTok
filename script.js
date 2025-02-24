@@ -1,3 +1,25 @@
+// script.js (updated)
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("toggleSidebar");
+  
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("sidebar-active");
+    });
+  }
+
+  // Pi Balance Simulation (replace with real data)
+  const piBalanceSpan = document.getElementById("piBalance");
+  if (piBalanceSpan) {
+    Pi.getBalance().then(balance => {
+      piBalanceSpan.textContent = balance.toFixed(2);
+    }).catch(() => {
+      piBalanceSpan.textContent = "3.14"; // Fallback
+    });
+  }
+});
+
+// Keep your existing Pi SDK functions...
 document.addEventListener("DOMContentLoaded", function () {
   const sidebar = document.querySelector(".sidebar");
   const body = document.body;
