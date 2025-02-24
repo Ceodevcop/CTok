@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trade - Pi-Store</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Pi-Store</h2>
+    <ul>
+      <li><a href="index.html">Connect Wallet</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="invest.html">Invest</a></li>
+      <li><a href="trade.html">Trade</a></li>
+      <li><a href="market.html">Market</a></li>
+    </ul>
+  </div>
+  <div class="main-content">
+    <h1>Trade Pi</h1>
+    <p>Buy or sell Pi at current market rates.</p>
+    <form id="trade-form">
+      <label for="trade-type">Trade Type:</label>
+      <select id="trade-type">
+        <option value="buy">Buy</option>
+        <option value="sell">Sell</option>
+      </select>
+      <br />
+      <label for="trade-amount">Amount (Pi):</label>
+      <input type="number" id="trade-amount" min="0" step="0.01" />
+      <br />
+      <button type="submit">Submit Trade</button>
+    </form>
+    <div id="trade-result"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
