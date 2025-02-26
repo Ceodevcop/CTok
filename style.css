@@ -1,28 +1,28 @@
-.cube {
-    width: 100px;
-    height: 100px;
-    position: relative;
-    transform-style: preserve-3d;
-    transform: rotateX(30deg) rotateY(30deg);
-    animation: rotate 5s infinite linear;
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f4f4f4;
 }
 
-.face {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background: rgba(0, 150, 255, 0.8);
-    border: 2px solid #fff;
+header {
+    background: #6200ea;
+    color: white;
+    padding: 15px;
 }
 
-.front  { transform: translateZ(50px); }
-.back   { transform: rotateY(180deg) translateZ(50px); }
-.left   { transform: rotateY(-90deg) translateZ(50px); }
-.right  { transform: rotateY(90deg) translateZ(50px); }
-.top    { transform: rotateX(90deg) translateZ(50px); }
-.bottom { transform: rotateX(-90deg) translateZ(50px); }
+button {
+    background: #03a9f4;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 10px;
+}
 
-@keyframes rotate {
-    from { transform: rotateX(30deg) rotateY(30deg); }
-    to   { transform: rotateX(30deg) rotateY(390deg); }
+.trade-section {
+    background: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
