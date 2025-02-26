@@ -1,33 +1,33 @@
-const apiKey = "ku2pc1gatt21dvcucrjakhogw8mtvot8wrjmqylc4kutjcoihkbfcz4q0wivlz4h"; // Your Pi API Key
-const pi = window.Pi;
+const { Pi } = window;
 
-document.getElementById("connectWallet").addEventListener("click", async () => {
+// Initialize Pi SDK
+Pi.init({ version: "2.0", sandbox: true });
+
+// Login Function
+document.getElementById("loginBtn").addEventListener("click", async () => {
     try {
-        // Authenticate with Pi Network
         const scopes = ["username", "payments"];
-        const auth = await pi.authenticate(scopes);
-        const { user } = auth;
-        
-        if (!user) {
-            alert("Authentication failed. Please try again.");
-            return;
-        }
-
-        // Request 1 Pi Payment
-        const payment = await pi.createPayment({
-            amount: 1,
-            memo: "Pi-Store Account Activation",
-            metadata: { userId: user.uid }
+        const user = await Pi.authenticate(scopes, (payment) => {
+            console.log("Incomplete payment:", payment);
         });
-
-        if (payment.status === "completed") {
-            alert("Payment successful! Redirecting to dashboard...");
-            window.location.href = "dashboard.html?user=" + user.username;
-        } else {
-            alert("Payment failed. Please try again.");
-        }
+        console.log("User:", user);
+        alert(`Welcome, ${user.username}`);
     } catch (error) {
-        console.error("Error:", error);
-        alert("Something went wrong!");
+        console.error("Login failed:", error);
+    }
+});
+
+// Payment Function
+document.getElementById("payBtn").addEventListener("click", async () => {
+    try {
+        const payment = await Pi.createPayment({
+            amount: 1,
+            memo: "C-Tok trade payment",
+            metadata: { purpose: "Trade on C-Tok" },
+        });
+        console.log("Payment created:", payment);
+        alert("Payment initiated!");
+    } catch (error) {
+        console.error("Payment error:", error);
     }
 });
