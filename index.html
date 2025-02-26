@@ -3,21 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pi-Store</title>
+    <title>C-Tok - Trade & Projects</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <script defer src="script.js"></script>
 </head>
 <body>
-    <div class="cube">
-    <div class="face front"></div>
-    <div class="face back"></div>
-    <div class="face left"></div>
-    <div class="face right"></div>
-    <div class="face top"></div>
-    <div class="face bottom"></div>
-</div>
+    <header>
+        <h1>C-Tok</h1>
+        <button id="loginBtn">Login with Pi</button>
+    </header>
 
-    <h1>Welcome to Pi-Store</h1>
-    <button id="connectWallet">Connect Pi Wallet</button>
+    <main>
+        <h2>Welcome to C-Tok</h2>
+        <p>Trade and create projects with the community.</p>
+
+        <div class="trade-section">
+            <h3>Make a Trade</h3>
+            <button id="payBtn">Pay 1 Pi</button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
