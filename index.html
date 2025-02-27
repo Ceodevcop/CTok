@@ -13,7 +13,7 @@
     <p id="status"></p>
 
     <script>
-        let username = "";
+        const C_TOK_WALLET = "your-pi-wallet-address"; // Replace with your Pi Wallet address
 
         document.getElementById("connectWallet").addEventListener("click", async () => {
             try {
@@ -21,42 +21,33 @@
                 const authResult = await Pi.authenticate(scopes, (res) => res);
 
                 if (authResult) {
-                    username = authResult.user.username;
-                    document.getElementById("status").innerText = "Wallet connected! Verifying 1 Pi transaction...";
+                    const username = authResult.user.username;
+                    document.getElementById("status").innerText = "Wallet connected! Sending 1 Pi transaction request...";
 
-                    // Check if user already exists in Supabase
-                    const { data: existingUser, error } = await supabase
-                        .from("users")
-                        .select("username")
-                        .eq("username", username)
-                        .single();
+                    // Create a Pi Payment
+                    const payment = await Pi.createPayment({
+                        amount: 1,
+                        memo: "C-Tok Registration",
+                        metadata: { username },
+                        to_address: C_TOK_WALLET,
+                    });
 
-                    if (existingUser) {
-                        window.location.href = "dashboard.html"; // Redirect if already registered
-                        return;
+                    if (payment.status === "COMPLETED") {
+                        document.getElementById("status").innerText = "Payment successful! Registering...";
+
+                        // Save user to Supabase
+                        await supabase.from("users").insert([{ username }]);
+
+                        window.location.href = "register.html"; // Redirect to register page
+                    } else {
+                        document.getElementById("status").innerText = "Payment failed. Try again.";
                     }
-
-                    // Check Pi Transaction (Mock Check)
-                    setTimeout(async () => {
-                        const transactionVerified = checkTransaction();
-
-                        if (transactionVerified) {
-                            await supabase.from("users").insert([{ username }]);
-                            window.location.href = "register.html"; // Redirect if successful
-                        } else {
-                            document.getElementById("status").innerText = "1 Pi transaction not found. Please try again.";
-                        }
-                    }, 2000);
                 }
             } catch (error) {
                 console.error("Authentication error:", error);
                 document.getElementById("status").innerText = "Error connecting wallet.";
             }
         });
-
-        function checkTransaction() {
-            return true; // Change to `false` to simulate failure
-        }
     </script>
 </body>
 </html>
