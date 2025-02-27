@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Advisor Bot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Welcome to the Legal Advisor Bot</h1>
+    <div id="auth">
+        <input type="email" id="email" placeholder="Enter email">
+        <input type="password" id="password" placeholder="Enter password">
+        <button onclick="register()">Register</button>
+        <button onclick="login()">Login</button>
+    </div>
+    <div id="project-form">
+        <textarea id="project-summary" placeholder="Enter project summary"></textarea>
+        <input type="file" id="project-document" accept=".pdf,.docx,.jpg,.png">
+        <button onclick="submitProject()">Submit for Verification</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
