@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        if (typeof Pi === "undefined") {
+            document.getElementById("status").innerText = "Pi SDK failed to load. Please try again inside Pi Browser.";
+        }
+    });
+</script>
+<script>
+    Pi.init({ version: "2.0", sandbox: false });
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C-Tok - Connect Wallet</title>
