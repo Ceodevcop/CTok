@@ -2,19 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - C-Tok</title>
-    <link rel="stylesheet" href="styles/auth.css">
-    <script src="scripts/supabase.js" defer></script>
-    <script src="scripts/auth.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="supabase.js"></script>
 </head>
 <body>
-    <div class="auth-container">
-        <h2>Register</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="register()">Sign Up</button>
-        <p>Already have an account? <a href="login.html">Login</a></p>
-    </div>
+    <h2>Register</h2>
+    <p>Select **2 roles**:</p>
+    <form id="registrationForm">
+        <label><input type="checkbox" name="role" value="Trader"> Trader</label><br>
+        <label><input type="checkbox" name="role" value="Investor"> Investor</label><br>
+        <label><input type="checkbox" name="role" value="Projector"> Projector</label><br>
+        <label><input type="checkbox" name="role" value="Miner"> Miner</label><br>
+        <button type="submit">Register</button>
+    </form>
+    <p id="message"></p>
+
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const selectedRoles = Array.from(document.querySelectorAll('input[name="role"]:checked')).map(el => el.value);
+
+            if (selectedRoles.length !== 2) {
+                document.getElementById("message").innerText = "Please select exactly 2 roles.";
+                return;
+            }
+
+            const username = "demoUser"; // Replace with actual username from Supabase
+
+            const { error } = await supabase
+                .from("users")
+                .update({ roles: selectedRoles })
+                .eq("username", username);
+
+            if (error) {
+                document.getElementById("message").innerText = "Error registering. Try again.";
+            } else {
+                document.getElementById("message").innerText = "Registration successful! Redirecting...";
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";
+                }, 2000);
+            }
+        });
+    </script>
 </body>
 </html>
