@@ -3,24 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C-Tok | Home</title>
-    <link rel="stylesheet" href="styles/main.css">
+    <title>C-Tok - Connect Wallet</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <script src="supabase.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Welcome to C-Tok</h1>
-        <nav>
-            <a href="login.html">Login</a>
-            <a href="register.html">Register</a>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="match.html">Matchmaking</a>
-            <a href="trade.html">Trade</a>
-            <a href="projects.html">Projects</a>
-        </nav>
-    </header>
-    <main>
-        <h2>Join the C-Tok Community</h2>
-        <p>Match, trade, and build projects together.</p>
-    </main>
+    <button id="connectWallet">Connect Wallet</button>
+    <p id="status"></p>
+
+    <script>
+        let username = "";
+
+        document.getElementById("connectWallet").addEventListener("click", async () => {
+            try {
+                const scopes = ["username", "payments"];
+                const authResult = await Pi.authenticate(scopes, (res) => res);
+
+                if (authResult) {
+                    username = authResult.user.username;
+                    document.getElementById("status").innerText = "Wallet connected! Verifying 1 Pi transaction...";
+
+                    // Check if user already exists in Supabase
+                    const { data: existingUser, error } = await supabase
+                        .from("users")
+                        .select("username")
+                        .eq("username", username)
+                        .single();
+
+                    if (existingUser) {
+                        window.location.href = "dashboard.html"; // Redirect if already registered
+                        return;
+                    }
+
+                    // Check Pi Transaction (Mock Check)
+                    setTimeout(async () => {
+                        const transactionVerified = checkTransaction();
+
+                        if (transactionVerified) {
+                            await supabase.from("users").insert([{ username }]);
+                            window.location.href = "register.html"; // Redirect if successful
+                        } else {
+                            document.getElementById("status").innerText = "1 Pi transaction not found. Please try again.";
+                        }
+                    }, 2000);
+                }
+            } catch (error) {
+                console.error("Authentication error:", error);
+                document.getElementById("status").innerText = "Error connecting wallet.";
+            }
+        });
+
+        function checkTransaction() {
+            return true; // Change to `false` to simulate failure
+        }
+    </script>
 </body>
 </html>
