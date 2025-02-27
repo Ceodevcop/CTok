@@ -3,17 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - C-Tok</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="supabase.js"></script>
 </head>
 <body>
-    <h1>Welcome to Pi-Store Dashboard</h1>
-    <form id="profileForm">
-        <input type="text" id="fullName" placeholder="Full Name" required>
-        <input type="text" id="phone" placeholder="Phone Number" required>
-        <input type="text" id="bankName" placeholder="Bank Name" required>
-        <input type="text" id="accountNumber" placeholder="Bank Account Number" required>
-        <button type="submit">Save Profile</button>
-    </form>
-    <script defer src="profile.js"></script>
+    <h2>Trader Dashboard</h2>
+    <p>Deposit, Withdraw, Swap</p>
+    
+    <button id="deposit">Deposit</button>
+    <button id="withdraw">Withdraw</button>
+    <button id="swap">Swap</button>
+
+    <p id="message"></p>
+
+    <script>
+        document.getElementById("deposit").addEventListener("click", async () => {
+            const amount = prompt("Enter deposit amount:");
+            if (!amount) return;
+
+            const { error } = await supabase
+                .from("transactions")
+                .insert([{ username: "demoUser", type: "deposit", amount }]);
+
+            document.getElementById("message").innerText = error ? "Deposit failed" : "Deposit successful!";
+        });
+
+        document.getElementById("withdraw").addEventListener("click", async () => {
+            const amount = prompt("Enter withdrawal amount:");
+            if (!amount) return;
+
+            const { error } = await supabase
+                .from("transactions")
+                .insert([{ username: "demoUser", type: "withdraw", amount }]);
+
+            document.getElementById("message").innerText = error ? "Withdrawal failed" : "Withdrawal successful!";
+        });
+
+        document.getElementById("swap").addEventListener("click", async () => {
+            const currency = prompt("Enter currency (Naira, USD, etc.):");
+            const amount = prompt("Enter amount:");
+            if (!currency || !amount) return;
+
+            const { error } = await supabase
+                .from("transactions")
+                .insert([{ username: "demoUser", type: "swap", amount, currency }]);
+
+            document.getElementById("message").innerText = error ? "Swap failed" : `Swapped to ${currency} successfully!`;
+        });
+    </script>
 </body>
 </html>
