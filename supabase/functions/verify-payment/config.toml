@@ -1,0 +1,2 @@
+[functions]
+verify-payment = "index.ts"
