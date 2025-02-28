@@ -4,46 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C-Tok - Connect Wallet</title>
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <script src="supabase.js"></script>
 </head>
 <body>
     <button id="connectWallet">Connect Wallet</button>
     <p id="status"></p>
 
     <script>
-        const PI_API_KEY = "jtmef4npxu4mj2vjmqezbhoq2r3t7c45qfkaxbcquuy8lpy0qfxffmgitob3hchn";  // Replace with your real API key
-        const C_TOK_WALLET = "GBAYVTW4RLO3QXXG75T7EICTBCETK5CQPEI4DM3TUDOKDND5CT2KMMFU"; // Replace with your real Pi Wallet address
+        // Initialize Supabase
+        const supabase = supabase.createClient(
+            "https://cqrnlcrpnyyhxghqwpnm.supabase.co",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxcm5sY3Jwbnl5aHhnaHF3cG5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAzOTc2OTgsImV4cCI6MjA1NTk3MzY5OH0.ZWYjte3-RHGV3Td7z3cdS3M6toHaMFqJSPJ0iFVd2X4"
+        );
 
-        // Ensure Pi SDK is loaded inside Pi Browser
-        document.addEventListener("DOMContentLoaded", () => {
-            if (typeof Pi === "undefined") {
-                document.getElementById("status").innerText = "Pi SDK failed to load. Please open this in Pi Browser.";
-                return;
-            }
-            Pi.init({ version: "2.0", sandbox: false });
-        });
+        // Pi API Key & C-Tok Wallet Address
+        const PI_API_KEY = "jtmef4npxu4mj2vjmqezbhoq2r3t7c45qfkaxbcquuy8lpy0qfxffmgitob3hchn";
+        const C_TOK_WALLET = "GBAYVTW4RLO3QXXG75T7EICTBCETK5CQPEI4DM3TUDOKDND5CT2KMMFU";
 
         document.getElementById("connectWallet").addEventListener("click", async () => {
             try {
-                if (typeof Pi === "undefined") {
-                    document.getElementById("status").innerText = "Pi SDK not loaded. Open this inside Pi Browser.";
-                    return;
-                }
+                // Initialize Pi SDK
+                Pi.init({ version: "2.0", sandbox: false });
 
-                const scopes = ["username", "payments"];
-                const authResult = await Pi.authenticate(scopes, (res) => res);
-
-                if (!authResult || !authResult.user) {
-                    throw new Error("Authentication failed. Please try again.");
-                }
+                // Authenticate user
+                const authResult = await Pi.authenticate(["username", "payments"], (res) => res);
+                if (!authResult) throw new Error("Authentication failed");
 
                 const username = authResult.user.username;
-                document.getElementById("status").innerText = "Wallet connected! Requesting 1 Pi transaction...";
+                document.getElementById("status").innerText = "Wallet connected! Sending 1 Pi transaction...";
 
-                // Request a payment
+                // Request a payment from the user
                 const payment = await Pi.createPayment({
                     amount: 1,
                     memo: "C-Tok Registration",
@@ -51,14 +42,14 @@
                     to_address: C_TOK_WALLET,
                 });
 
-                if (payment && payment.status === "COMPLETED") {
-                    document.getElementById("status").innerText = "Payment successful! Verifying transaction...";
+                if (payment.status === "COMPLETED") {
+                    document.getElementById("status").innerText = "Payment successful! Verifying...";
 
-                    // Verify payment with Pi API
+                    // Verify the payment using Pi API
                     const verified = await verifyPayment(payment.identifier);
-
+                    
                     if (verified) {
-                        // Save user to Supabase if payment is verified
+                        // Save user to Supabase
                         await supabase.from("users").insert([{ username }]);
                         window.location.href = "register.html"; // Redirect to registration page
                     } else {
@@ -68,11 +59,12 @@
                     document.getElementById("status").innerText = "Payment failed. Try again.";
                 }
             } catch (error) {
-                console.error("Wallet connection error:", error);
-                document.getElementById("status").innerText = "Error connecting wallet.";
+                console.error("Error:", error);
+                document.getElementById("status").innerText = "Error connecting wallet. Try again.";
             }
         });
 
+        // Function to verify payment
         async function verifyPayment(paymentId) {
             try {
                 const response = await fetch(`https://api.minepi.com/v2/payments/${paymentId}`, {
