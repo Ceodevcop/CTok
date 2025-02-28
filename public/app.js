@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         amount: 1,
         memo: "C-Tok Registration",
         metadata: { uid: user.uid },
-        to_address: "YOUR_PI_WALLET_ADDRESS"
+        to_address: "GBAYVTW4RLO3QXXG75T7EICTBCETK5CQPEI4DM3TUDOKDND5CT2KMMFU"
       })
 
       if (payment.status === "COMPLETED") {
