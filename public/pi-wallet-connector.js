@@ -5,8 +5,8 @@ const PI_CONFIG = {
   version: "2.0",
   sandbox: true, // Set to false in production
   walletAddress: "GBAYVTW4RLO3QXXG75T7EICTBCETK5CQPEI4DM3TUDOKDND5CT2KMMFU",
-  supabaseUrl: "https://your-project-ref.supabase.co",
-  supabaseKey: "your-anon-key"
+  supabaseUrl: "https://cqrnlcrpnyyhxghqwpnm.supabase.co",
+  supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxcm5sY3Jwbnl5aHhnaHF3cG5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAzOTc2OTgsImV4cCI6MjA1NTk3MzY5OH0.ZWYjte3-RHGV3Td7z3cdS3M6toHaMFqJSPJ0iFVd2X4"
 };
 
 // Initialize Supabase Client
