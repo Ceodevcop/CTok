@@ -1,3 +1,20 @@
+// Add debug logs at key points
+console.log("Pi SDK status:", typeof Pi); // Should be "object"
+
+// Enhanced initialization
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("DOM fully loaded");
+  try {
+    Pi.init({ 
+      version: "2.0",
+      sandbox: true, // MUST be true for browser testing
+      onReady: () => console.log("Pi SDK ready"),
+      onError: (error) => console.error("Pi SDK error:", error)
+    });
+  } catch (e) {
+    console.error("Pi.init error:", e);
+  }
+});
 // pi-wallet.js - Pi Network Wallet Integration
 
 // Initialize Supabase
