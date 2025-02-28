@@ -2,15 +2,15 @@
 
 // Initialize Supabase
 const supabase = createClient(
-  'https://your-project-ref.supabase.co',
-  'your-anon-key'
+  'https://cqrnlcrpnyyhxghqwpnm.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxcm5sY3Jwbnl5aHhnaHF3cG5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAzOTc2OTgsImV4cCI6MjA1NTk3MzY5OH0.ZWYjte3-RHGV3Td7z3cdS3M6toHaMFqJSPJ0iFVd2X4'
 )
 
 // Pi Network Configuration
 const PI_CONFIG = {
   version: "2.0",
   sandbox: true, // Switch to false for production
-  walletAddress: "YOUR_PI_WALLET_ADDRESS"
+  walletAddress: "GBAYVTW4RLO3QXXG75T7EICTBCETK5CQPEI4DM3TUDOKDND5CT2KMMFU"
 }
 
 // Initialize Pi SDK
