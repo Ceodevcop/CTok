@@ -1,13 +1,189 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Pi Network Integration</title>
-  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="pi-auth-payments.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C-Tok - Pi Utility Platform</title>
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <style>
+        /* Your existing styles */
+    </style>
 </head>
 <body>
-  <button id="connectWallet">Connect Pi Wallet</button>
-  <p id="status">Status: Ready</p>
+    <header class="header">
+        <h1>C-Tok platform</h1>
+        <div class="auth-section">
+            <button id="piAuthBtn" class="pi-pay-button">Connect Wallet</button>
+            <div id="userProfile" class="hidden"></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="marketplace" class="marketplace-grid">
+            <div class="vendor-card">
+                <h3>Loading Services...</h3>
+                <div class="spinner"></div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log("DOM fully loaded.");
+
+            if (typeof Pi === 'undefined') {
+                console.error("Pi SDK is not loaded. Ensure the Pi SDK script is included.");
+                return;
+            }
+
+            console.log("Pi object:", Pi);
+            if (Pi && typeof Pi.authenticate === 'function') {
+                console.log("Pi.authenticate is available.");
+            } else {
+                console.error("Pi.authenticate is not available.");
+                return;
+            }
+
+            // Define onIncompletePayment function
+            function onIncompletePayment(paymentId) {
+                console.log("onIncompletePayment called with Payment ID:", paymentId);
+                showError("Payment incomplete. Please try again.");
+            }
+
+            // Initialize Pi SDK
+            async function initializePi() {
+                try {
+                    console.log("Initializing Pi SDK...");
+                    await Pi.init({
+                        version: "2.0",
+                        sandbox: false // Set to true for testing
+                    });
+                    console.log("Pi SDK initialized successfully.");
+                } catch (error) {
+                    console.error("Failed to initialize Pi SDK:", error);
+                    showError("Failed to initialize Pi SDK: " + error.message);
+                }
+            }
+
+            // Authentication Handler
+            async function handlePiAuth() {
+                try {
+                    console.log("Starting authentication...");
+                    const authResult = await Pi.authenticate(['payments'], onIncompletePayment);
+                    currentUser = authResult.user;
+                    console.log("User authenticated:", currentUser);
+                    
+                    updateUIAfterAuth();
+                    loadMarketplace();
+                    
+                } catch (error) {
+                    console.error("Authentication failed:", error);
+                    showError("Authentication failed: " + error.message);
+                }
+            }
+
+            // Payment Handling
+            async function initiatePayment(vendorId, amount) {
+                const paymentButton = document.getElementById(`pay-${vendorId}`);
+                paymentButton.disabled = true;
+                
+                try {
+                    const paymentData = {
+                        amount: amount,
+                        memo: `Payment to ${vendorId}`,
+                        metadata: { vendorId }
+                    };
+
+                    const payment = await Pi.createPayment(paymentData);
+                    console.log("Payment created:", payment);
+                    
+                    // Replace with your API endpoint for processing payments
+                    const response = await fetch('https://your-api-endpoint.com/payments', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${currentUser.accessToken}`
+                        },
+                        body: JSON.stringify({
+                            paymentId: payment.identifier,
+                            amount,
+                            vendorId,
+                            walletAddress: 'YOUR_WALLET_ADDRESS' // Replace with your wallet address
+                        })
+                    });
+
+                    if (!response.ok) throw new Error('Payment processing failed');
+                    console.log("Payment initiated successfully.");
+                    showSuccess("Payment initiated successfully!");
+                    
+                } catch (error) {
+                    console.error("Payment failed:", error);
+                    showError("Payment failed: " + error.message);
+                } finally {
+                    paymentButton.disabled = false;
+                }
+            }
+
+            // Marketplace Loader
+            async function loadMarketplace() {
+                try {
+                    console.log("Loading marketplace...");
+                    // Replace with your API endpoint for fetching marketplace data
+                    const response = await fetch('https://your-api-endpoint.com/marketplace');
+                    const vendors = await response.json();
+                    console.log("Marketplace data loaded:", vendors);
+                    
+                    const marketplace = document.getElementById('marketplace');
+                    marketplace.innerHTML = vendors.map(vendor => `
+                        <div class="vendor-card">
+                            <h2>${vendor.name}</h2>
+                            <p>${vendor.description}</p>
+                            <div class="service-price">${vendor.price} π</div>
+                            <button 
+                                id="pay-${vendor.id}" 
+                                class="pi-pay-button"
+                                onclick="initiatePayment('${vendor.id}', ${vendor.price})"
+                            >
+                                Pay with Pi
+                            </button>
+                        </div>
+                    `).join('');
+                    
+                } catch (error) {
+                    console.error("Failed to load marketplace:", error);
+                    showError("Failed to load marketplace: " + error.message);
+                }
+            }
+
+            // UI Updates
+            function updateUIAfterAuth() {
+                document.getElementById('piAuthBtn').style.display = 'none';
+                
+                const userProfile = document.getElementById('userProfile');
+                userProfile.innerHTML = `
+                    <div class="user-info">
+                        <span>${currentUser.username}</span>
+                        <div class="pi-balance">Balance: ${currentUser.balance} π</div>
+                    </div>
+                `;
+                userProfile.style.display = 'block';
+            }
+
+            // Helper Functions
+            function showError(message) {
+                alert('Error: ' + message);
+            }
+
+            function showSuccess(message) {
+                alert('Success: ' + message);
+            }
+
+            // Event Listeners
+            document.getElementById('piAuthBtn').addEventListener('click', handlePiAuth);
+            
+            // Initialize
+            initializePi();
+        });
+    </script>
 </body>
 </html>
