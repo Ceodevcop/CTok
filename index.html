@@ -92,7 +92,7 @@
             border: 4px solid #f3f3f3;
             border-top: 4px solid var(--primary);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 2s linear infinite;
         }
 
         @keyframes spin {
@@ -129,7 +129,7 @@
         async function initializePi() {
             Pi.init({
                 version: "2.0",
-                sandbox: true // Set to false for production
+                sandbox: false // Set to false for production
             });
         }
 
