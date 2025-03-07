@@ -1,117 +1,12 @@
-<!-- Index Page (index.html) -->
-<script src="https://sdk.minepi.com/pi-sdk.js"></script>
-<script>
-  // Initialize Pi SDK
-  Pi.init({
-    version: "2.0",
-    sandbox: true // Set to false in production
-  });
-
-  async function connectWallet() {
-    try {
-      // Authenticate user with required scopes
-      const { accessToken, user } = await Pi.authenticate(
-        ['username', 'payments', 'wallet_address'],
-        handleIncompletePayment
-      );
-
-      // Store user session (example using sessionStorage)
-      sessionStorage.setItem('piUser', JSON.stringify(user));
-      sessionStorage.setItem('piAccessToken', accessToken);
-
-      // Create payment after successful auth
-      createConnectionPayment();
-    } catch (error) {
-      console.error('Authentication error:', error);
-      alert('Error connecting wallet. Please try again.');
-    }
-  }
-
-  async function createConnectionPayment() {
-    const paymentData = {
-      amount: 1,
-      memo: "CTok Platform Access Fee",
-      metadata: { 
-        type: "account_connection",
-        timestamp: Date.now()
-      }
-    };
-
-    const callbacks = {
-      onReadyForServerApproval: async (paymentId) => {
-        try {
-          const response = await fetch('/api/approve-payment', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${sessionStorage.getItem('piAccessToken')}`
-            },
-            body: JSON.stringify({ paymentId })
-          });
-          
-          if (!response.ok) throw new Error('Approval failed');
-        } catch (error) {
-          console.error('Approval error:', error);
-          Pi.createPayment(paymentData, callbacks); // Retry payment
-        }
-      },
-
-      onReadyForServerCompletion: async (paymentId, txid) => {
-        try {
-          const response = await fetch('/api/complete-payment', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${sessionStorage.getItem('piAccessToken')}`
-            },
-            body: JSON.stringify({ paymentId, txid })
-          });
-
-          if (!response.ok) throw new Error('Completion failed');
-          
-          // Redirect to dashboard on success
-          window.location.href = '/dashboard';
-        } catch (error) {
-          console.error('Completion error:', error);
-          alert('Payment verification failed. Please try again.');
-        }
-      },
-
-      onCancel: (paymentId) => {
-        alert('Payment cancelled. Wallet connection aborted.');
-      },
-
-      onError: (error, payment) => {
-        console.error('Payment error:', error);
-        alert(`Payment failed: ${error.message}`);
-      }
-    };
-
-    Pi.createPayment(paymentData, callbacks);
-  }
-
-  async function handleIncompletePayment(payment) {
-    try {
-      const response = await fetch('/api/complete-payment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('piAccessToken')}`
-        },
-        body: JSON.stringify(payment)
-      });
-      
-      if (response.ok) {
-        // Retry payment creation after resolving incomplete payment
-        createConnectionPayment();
-      }
-    } catch (error) {
-      console.error('Incomplete payment handling failed:', error);
-    }
-  }
-</script>
-
-<!-- Connect Wallet Button -->
-<button onclick="connectWallet()">
-  Connect Wallet (1 Pi Fee)
-    </button> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pi Payment App</title>
+</head>
+<body>
+    <button id="connectWallet">Connect Wallet</button>
+    <script src="pi-payment-app.js"></script>
+</body>
+</html>
