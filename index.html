@@ -3,10 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pi Payment App</title>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
-    <button id="connectWallet">Connect Wallet</button>
-    <script src="pi-payment-app.js"></script>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <h2>Central Market</h2>
+            <ul>
+                <li class="active">Dashboard</li>
+                <li>Products</li>
+                <li>Orders</li>
+                <li>Payments</li>
+                <li>Analytics</li>
+                <li>Marketing</li>
+                <li>Security</li>
+            </ul>
+            <button id="toggle-theme">Toggle Theme</button>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Admin Dashboard</h1>
+            </header>
+            <section class="overview">
+                <div class="card">Total Sales: $10,000</div>
+                <div class="card">Orders: 150</div>
+                <div class="card">Revenue: $50,000</div>
+            </section>
+            <section class="transactions">
+                <h2>Recent Transactions</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#12345</td>
+                            <td>John Doe</td>
+                            <td>$120</td>
+                            <td>Completed</td>
+                        </tr>
+                        <tr>
+                            <td>#12346</td>
+                            <td>Jane Smith</td>
+                            <td>$250</td>
+                            <td>Pending</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+
+    </div>
+
 </body>
 </html>
